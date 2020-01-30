@@ -1,4 +1,9 @@
 language: python
+
+branches:
+  only:
+  - master
+
 python:
   - "3.7"
 
@@ -6,4 +11,4 @@ python:
 #  - pip install -r requirements.txt
 #
 script:
-  - test.py
+  - travis-sandbox/test.py
