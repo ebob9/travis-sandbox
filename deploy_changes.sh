@@ -33,14 +33,14 @@ CGX_COMMIT_IN_PROD=$(git show-ref -s in_prod)
 
 # Get modified from current master commit and latest in_prod commit.
 MODIFIED_CONFIGS=$(git diff "${CGX_COMMIT_IN_PROD}" "${TRAVIS_COMMIT}" --diff-filter=ACMR --name-status | cut -f2 \
-                   | grep '\.yml$')
+                   | grep 'configurations\/.*\.yml')
 
 # execute the changes
 echo "PROD_TO_CURRENT: ${CGX_COMMIT_IN_PROD}...${TRAVIS_COMMIT}"
 echo "MODIFIED_CONFIGS: ${MODIFIED_CONFIGS}"
 for SITE_CONFIG in ${MODIFIED_CONFIGS}
   do
-    echo "${SITE_CONFIG}" > log/$(basename "${SITE_CONFIG}")
+    echo "${SITE_CONFIG}" > "log/$(basename "${SITE_CONFIG}")" 2>&1
   done
 
 # push logs to master
