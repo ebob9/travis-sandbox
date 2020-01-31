@@ -21,11 +21,12 @@ git config --global user.name "travisci-worker-ebob9"
 git remote rm origin
 # Add new "origin" with access token in the git URL for authentication
 git remote add origin "https://travisci-worker-ebob9:${GITHUB_REPO_TOKEN}@github.com/ebob9/travis-sandbox.git" > /dev/null 2>&1
+# pull to refresh
+git pull
 
 # DEBUG - find out why things arent working
 git remote get-url --all origin
 git show-ref -s in_prod
-
 
 # Get latest commit tagged in production
 CGX_COMMIT_IN_PROD=$(git show-ref -s in_prod)
@@ -38,9 +39,13 @@ MODIFIED_CONFIGS=$(git diff "${CGX_COMMIT_IN_PROD}" "${TRAVIS_COMMIT}" --diff-fi
 # execute the changes
 echo "PROD_TO_CURRENT: ${CGX_COMMIT_IN_PROD}...${TRAVIS_COMMIT}"
 echo "MODIFIED_CONFIGS: ${MODIFIED_CONFIGS}"
+
+# create tmp logs
+mkdir /tmp/logs
+
 for SITE_CONFIG in ${MODIFIED_CONFIGS}
   do
-    echo "${SITE_CONFIG}" > "logs/$(basename "${SITE_CONFIG}")" 2>&1
+    echo "${SITE_CONFIG}" > "/tmp/logs/$(basename "${SITE_CONFIG}")" 2>&1
   done
 
 # delete current in_prod tag
@@ -51,10 +56,20 @@ git push origin :refs/tags/in_prod
 git tag in_prod
 git push origin refs/tags/in_prod
 
-# push logs to master
+# switch to logs
+git checkout -b logs
+git pull
+
+# merge (w/overwrite) master to logs.
+git pull -X master
+
+# copy logs to logs directory
+cp -a /tmp/logs/* logs/
+
+# push logs to logs repository
 git add logs/*
 git commit -m 'Build Log Results [ci skip]'
-git push -f origin master:logs
+git push origin
 
 # Debug push items
 git log --full-history
