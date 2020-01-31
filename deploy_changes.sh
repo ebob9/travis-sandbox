@@ -43,11 +43,6 @@ for SITE_CONFIG in ${MODIFIED_CONFIGS}
     echo "${SITE_CONFIG}" > "logs/$(basename "${SITE_CONFIG}")" 2>&1
   done
 
-# push logs to master
-git add logs/*
-git commit -m 'Build Log Results [ci skip]'
-git push -f origin master:logs
-
 # delete current in_prod tag
 git tag -d in_prod
 git push origin :refs/tags/in_prod
@@ -55,3 +50,9 @@ git push origin :refs/tags/in_prod
 # add new in_prod tag to current build
 git tag in_prod
 git push origin refs/tags/in_prod
+
+# push logs to master
+git add logs/*
+git commit -m 'Build Log Results [ci skip]'
+git push -f origin master:logs
+
