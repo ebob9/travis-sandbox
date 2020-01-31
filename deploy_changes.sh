@@ -58,11 +58,11 @@ git push origin refs/tags/in_prod
 
 # switch to logs
 git checkout -b logs
-git branch --set-upstream-to=origin logs
-git pull
+git branch -u origin/logs
+git pull --no-commit logs
 
 # merge (w/overwrite) master to logs.
-git pull -X master
+git pull --no-commit -X master
 
 # copy logs to logs directory
 cp -a /tmp/logs/* logs/
