@@ -46,7 +46,7 @@ for SITE_CONFIG in ${MODIFIED_CONFIGS}
 # push logs to master
 git add logs/*
 git commit -m 'Build Log Results [ci skip]'
-git push origin logs
+git push -f origin master:logs
 
 # delete current in_prod tag
 git tag -d in_prod
