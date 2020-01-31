@@ -21,8 +21,6 @@ git config --global user.name "travisci-worker-ebob9"
 git remote rm origin
 # Add new "origin" with access token in the git URL for authentication
 git remote add origin "https://travisci-worker-ebob9:${GITHUB_REPO_TOKEN}@github.com/ebob9/travis-sandbox.git" > /dev/null 2>&1
-# pull to refresh
-git pull
 
 # DEBUG - find out why things arent working
 git remote get-url --all origin
@@ -59,10 +57,10 @@ git push origin refs/tags/in_prod
 # switch to logs
 git checkout -b logs
 git branch -u origin/logs
-git pull --no-commit logs
+git pull --no-commit
 
 # merge (w/overwrite) master to logs.
-git pull --no-commit -X master
+git pull --no-commit -X theirs origin master
 
 # copy logs to logs directory
 cp -a /tmp/logs/* logs/
