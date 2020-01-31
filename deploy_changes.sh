@@ -10,6 +10,8 @@
 # AUTH_TOKEN = Valid tenant_super CloudGenix Auth Token
 # TRAVIS_COMMIT = Current commit hash
 
+# Debug script (if needed)
+set -x
 
 # Get latest commit tagged in production
 CGX_COMMIT_IN_PROD=$(git show-ref -s in_prod)
