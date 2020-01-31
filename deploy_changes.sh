@@ -17,6 +17,11 @@ set -x
 git config --global user.email "travis@travis-ci.org"
 git config --global user.name "Travis CI"
 
+# Remove existing "origin"
+git remote rm origin
+# Add new "origin" with access token in the git URL for authentication
+git remote add origin "https://travisci-worker-ebob9:${GITHUB_REPO_TOKEN}@github.com/ebob9/travis-sandbox.git" > /dev/null 2>&1
+
 # DEBUG - find out why things arent working
 git remote get-url --all origin
 git show-ref -s in_prod
@@ -41,7 +46,7 @@ for SITE_CONFIG in ${MODIFIED_CONFIGS}
 # push logs to master
 git add logs/*
 git commit -m 'Build Log Results [ci skip]'
-git push origin master
+git push origin logs
 
 # delete current in_prod tag
 git tag -d in_prod
