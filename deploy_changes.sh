@@ -45,7 +45,7 @@ mkdir /tmp/logs
 
 for SITE_CONFIG in ${MODIFIED_CONFIGS}
   do
-    echo "${SITE_CONFIG}" > "/tmp/logs/$(basename "${SITE_CONFIG}")" 2>&1
+    echo "${SITE_CONFIG}-$RANDOM" > "/tmp/logs/$(basename "${SITE_CONFIG}")" 2>&1
   done
 
 # delete current in_prod tag
