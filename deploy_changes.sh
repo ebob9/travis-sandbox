@@ -40,7 +40,7 @@ echo "PROD_TO_CURRENT: ${CGX_COMMIT_IN_PROD}...${TRAVIS_COMMIT}"
 echo "MODIFIED_CONFIGS: ${MODIFIED_CONFIGS}"
 for SITE_CONFIG in ${MODIFIED_CONFIGS}
   do
-    echo "${SITE_CONFIG}" > "log/$(basename "${SITE_CONFIG}")" 2>&1
+    echo "${SITE_CONFIG}" > "logs/$(basename "${SITE_CONFIG}")" 2>&1
   done
 
 # push logs to master
