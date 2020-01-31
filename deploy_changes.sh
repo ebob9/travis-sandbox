@@ -14,8 +14,8 @@
 set -x
 
 # Set up git for log commit back to master.
-git config --global user.email "travis@travis-ci.org"
-git config --global user.name "Travis CI"
+git config --global user.email "travisci-worker-ebob9@travis-ci.org"
+git config --global user.name "travisci-worker-ebob9"
 
 # Remove existing "origin"
 git remote rm origin
