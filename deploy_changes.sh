@@ -57,7 +57,8 @@ git push origin refs/tags/in_prod
 # switch to logs
 git checkout -b logs
 git branch -u origin/logs
-git pull --no-commit origin logs
+git fetch --all
+git reset --hard origin/logs
 
 # merge (w/overwrite) master to logs.
 git pull --no-commit -X theirs origin master
@@ -70,8 +71,8 @@ git add logs/*
 git commit -m 'Build Log Results [ci skip]'
 git push origin logs
 
-# Debug push items
-git log --full-history
-git reflog
-git remote -v
+## Debug push items
+#git log --full-history
+#git reflog
+#git remote -v
 
