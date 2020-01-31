@@ -12,6 +12,13 @@
 
 # Debug script (if needed)
 set -x
+# Set up git for log commit back to master.
+git config --global user.email "travis@travis-ci.org"
+git config --global user.name "Travis CI"
+
+# DEBUG - find out why things arent working
+git remote get-url --all origin
+git show-ref -s in_prod
 
 # Get latest commit tagged in production
 CGX_COMMIT_IN_PROD=$(git show-ref -s in_prod)
