@@ -56,3 +56,8 @@ git add logs/*
 git commit -m 'Build Log Results [ci skip]'
 git push -f origin master:logs
 
+# Debug push items
+git log --full-history
+git reflog
+git remote -v
+git remote show logs
