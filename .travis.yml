@@ -12,6 +12,4 @@ python:
 #
 script:
   - ls -al
-  - ls -al ebob9/
-  - ls -al ebob9/travis-sandbox
-  - python ebob9/travis-sandbox/test.py
+  - python ./test.py
