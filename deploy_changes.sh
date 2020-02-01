@@ -42,7 +42,8 @@ MODIFIED_CONFIGS=$(git diff "${CGX_COMMIT_IN_PROD}" "${TRAVIS_COMMIT}" --diff-fi
 
 # execute the changes
 echo "Commit diff check range: ${CGX_COMMIT_IN_PROD}...${TRAVIS_COMMIT}"
-echo "Configuration Files Modified: ${MODIFIED_CONFIGS}"
+echo "Configuration Files Modified:"
+echo "${MODIFIED_CONFIGS}" | indent
 
 # create tmp logs
 mkdir /tmp/logs
