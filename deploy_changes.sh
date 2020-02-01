@@ -12,16 +12,19 @@
 
 EXIT_CODE=0
 
+# Indent function
+indent() { sed 's/^/    /'; }
+
 # Debug script (if needed)
 #set -x
 
 # Set up git for log commit back to master.
 echo "Setting GIT authentication/origin.."
-git config --global user.email "travisci-worker-ebob9@travis-ci.org"
-git config --global user.name "travisci-worker-ebob9"
+git config --global user.email "travisci-worker-ebob9@travis-ci.org" | indent
+git config --global user.name "travisci-worker-ebob9" | indent
 
 # Remove existing "origin"
-git remote rm origin
+git remote rm origin | indent
 # Add new "origin" with access token in the git URL for authentication
 git remote add origin "https://travisci-worker-ebob9:${GITHUB_REPO_TOKEN}@github.com/ebob9/travis-sandbox.git" > /dev/null 2>&1
 
@@ -59,31 +62,31 @@ for SITE_CONFIG in ${MODIFIED_CONFIGS}
 
 # delete current in_prod tag
 echo "Updating 'in_prod' tag in Github.."
-git tag -d in_prod
-git push origin :refs/tags/in_prod
+git tag -d in_prod | indent
+git push origin :refs/tags/in_prod | indent
 
 # add new in_prod tag to current build
-git tag in_prod
-git push origin refs/tags/in_prod
+git tag in_prod | indent
+git push origin refs/tags/in_prod | indent
 
 
 # switch to logs
 echo "Saving logs to origin/logs.."
-git checkout -b logs
-git fetch --all
-git branch -u origin/logs
-git reset --hard origin/logs
+git checkout -b logs | indent
+git fetch --all | indent
+git branch -u origin/logs | indent
+git reset --hard origin/logs | indent
 
 # merge (w/overwrite) master to logs.
-git pull --no-commit -X theirs origin master
+git pull --no-commit -X theirs origin master | indent
 
 # copy logs to logs directory
-cp -a /tmp/logs/* logs/
+cp -a /tmp/logs/* logs/ | indent
 
 # push logs to logs repository
-git add logs/*
-git commit -m 'Configuration Log Results [ci skip]'
-git push origin logs
+git add logs/* | indent
+git commit -m 'Configuration Log Results [ci skip]' | indent
+git push origin logs | indent
 
 ## Debug push items
 #git log --full-history
