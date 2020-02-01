@@ -56,8 +56,8 @@ git push origin refs/tags/in_prod
 
 # switch to logs
 git checkout -b logs
-git branch -u origin/logs
 git fetch --all
+git branch -u origin/logs
 git reset --hard origin/logs
 
 # merge (w/overwrite) master to logs.
