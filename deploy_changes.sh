@@ -20,11 +20,11 @@ indent() { sed 's/^/    /'; }
 
 # Set up git for log commit back to master.
 echo "Setting GIT authentication/origin.."
-git config --global user.email "travisci-worker-ebob9@travis-ci.org" | indent
-git config --global user.name "travisci-worker-ebob9" | indent
+git config --global user.email "travisci-worker-ebob9@travis-ci.org" 2>&1 2>&1 | indent
+git config --global user.name "travisci-worker-ebob9" 2>&1 | indent
 
 # Remove existing "origin"
-git remote rm origin | indent
+git remote rm origin 2>&1 | indent
 # Add new "origin" with access token in the git URL for authentication
 git remote add origin "https://travisci-worker-ebob9:${GITHUB_REPO_TOKEN}@github.com/ebob9/travis-sandbox.git" > /dev/null 2>&1
 
@@ -43,7 +43,7 @@ MODIFIED_CONFIGS=$(git diff "${CGX_COMMIT_IN_PROD}" "${TRAVIS_COMMIT}" --diff-fi
 # execute the changes
 echo "Commit diff check range: ${CGX_COMMIT_IN_PROD}...${TRAVIS_COMMIT}"
 echo "Configuration Files Modified:"
-echo "${MODIFIED_CONFIGS}" | indent
+echo "${MODIFIED_CONFIGS}" 2>&1 | indent
 
 # create tmp logs
 mkdir /tmp/logs
@@ -63,31 +63,31 @@ for SITE_CONFIG in ${MODIFIED_CONFIGS}
 
 # delete current in_prod tag
 echo "Updating 'in_prod' tag in Github.."
-git tag -d in_prod | indent
-git push origin :refs/tags/in_prod | indent
+git tag -d in_prod 2>&1 | indent
+git push origin :refs/tags/in_prod 2>&1 | indent
 
 # add new in_prod tag to current build
-git tag in_prod | indent
-git push origin refs/tags/in_prod | indent
+git tag in_prod 2>&1 | indent
+git push origin refs/tags/in_prod 2>&1 | indent
 
 
 # switch to logs
 echo "Saving logs to origin/logs.."
-git checkout -b logs | indent
-git fetch --all | indent
-git branch -u origin/logs | indent
-git reset --hard origin/logs | indent
+git checkout -b logs 2>&1 | indent
+git fetch --all 2>&1 | indent
+git branch -u origin/logs 2>&1 | indent
+git reset --hard origin/logs 2>&1 | indent
 
 # merge (w/overwrite) master to logs.
-git pull --no-commit -X theirs origin master | indent
+git pull --no-commit -X theirs origin master 2>&1 | indent
 
 # copy logs to logs directory
-cp -a /tmp/logs/* logs/ | indent
+cp -a /tmp/logs/* logs/ 2>&1 | indent
 
 # push logs to logs repository
-git add logs/* | indent
-git commit -m 'Configuration Log Results [ci skip]' | indent
-git push origin logs | indent
+git add logs/* 2>&1 | indent
+git commit -m 'Configuration Log Results [ci skip]' 2>&1 | indent
+git push origin logs 2>&1 | indent
 
 ## Debug push items
 #git log --full-history
