@@ -8,11 +8,12 @@
 #
 # Variables expected set by the CI/CD before this script:
 # AUTH_TOKEN = Valid tenant_super CloudGenix Auth Token
+# GITHUB_REPO_TOKEN = Valid personal token that has Repository access to commit.
 # TRAVIS_COMMIT = Current commit hash
 
 EXIT_CODE=0
 
-# Indent function
+# Indent and pretty-fi function
 indent() { sed 's/^/    /'; }
 
 # Debug script (if needed)
@@ -42,7 +43,7 @@ MODIFIED_CONFIGS=$(git diff "${CGX_COMMIT_IN_PROD}" "${TRAVIS_COMMIT}" --diff-fi
 
 # execute the changes
 echo "Commit diff check range: ${CGX_COMMIT_IN_PROD}...${TRAVIS_COMMIT}"
-echo "Configuration Files Modified:"
+echo "Configuration Files Added or Modified:"
 echo "${MODIFIED_CONFIGS}" 2>&1 | indent
 
 # create tmp logs
