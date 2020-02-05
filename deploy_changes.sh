@@ -85,10 +85,25 @@ git pull --no-commit -X theirs origin master 2>&1 | indent
 # copy logs to logs directory
 cp -a /tmp/logs/* logs/ 2>&1 | indent
 
-# push logs to logs repository
-git add logs/* 2>&1 | indent
-git commit -m 'Configuration Log Results [ci skip]' 2>&1 | indent
-git push origin logs 2>&1 | indent
+# create screenshots of all new items.
+for SITE_CONFIG in ${MODIFIED_CONFIGS}
+  do
+    SITE_CONFIG_FILE=$(basename "${SITE_CONFIG}")
+    echo "Taking Screenshots of objects in ${SITE_CONFIG_FILE}: "
+    if python3 ./screenshot.py "${SITE_CONFIG_FILE}"
+      then
+        echo "Success. "
+      else
+        echo "Failed, code $?. "
+        EXIT_CODE=1
+    fi
+  done
+
+# push logs and screenshots to results repository
+git add -A logs/* 2>&1 | indent
+git add -A screenshots/* 2>&1 | indent
+git commit -m 'Configuration Log and Screenshot Results [ci skip]' 2>&1 | indent
+git push origin results 2>&1 | indent
 
 ## Debug push items
 #git log --full-history
