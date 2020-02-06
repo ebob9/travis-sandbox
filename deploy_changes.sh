@@ -42,7 +42,7 @@ git remote add origin "https://travisci-worker-ebob9:${GITHUB_REPO_TOKEN}@github
 
 # Get latest commit tagged in production
 CGX_COMMIT_IN_PROD=$(git show-ref -s in_prod)
-echo "Latest 'in_prod' commit: ${CGX_COMMIT_IN_PROD}"
+echo -e "${WHITE}Latest 'in_prod' commit:${NC} ${CGX_COMMIT_IN_PROD}"
 
 # Set IFS to LF to handle spaces.
 IFS=$'\n'
@@ -52,8 +52,8 @@ MODIFIED_CONFIGS=$(git diff "${CGX_COMMIT_IN_PROD}" "${TRAVIS_COMMIT}" --diff-fi
                    | grep 'configurations\/.*\.yml')
 
 # execute the changes
-echo "Commit diff check range: ${CGX_COMMIT_IN_PROD}...${TRAVIS_COMMIT}"
-echo "Configuration Files Added or Modified:"
+echo -e "${WHITE}Commit diff check range:${NC} ${CGX_COMMIT_IN_PROD}...${TRAVIS_COMMIT}"
+echo -e "${WHITE}Configuration Files Added or Modified:${NC}"
 echo "${MODIFIED_CONFIGS}" 2>&1 | indent
 
 # create tmp logs
@@ -62,18 +62,18 @@ mkdir /tmp/logs
 for SITE_CONFIG in ${MODIFIED_CONFIGS}
   do
     SITE_CONFIG_FILE=$(basename "${SITE_CONFIG}")
-    echo -n "Executing ${SITE_CONFIG_FILE} Configuration: "
+    echo -e -n "${WHITE}Executing ${SITE_CONFIG_FILE} Configuration: ${NC}"
     if echo "${SITE_CONFIG}-$RANDOM" > "/tmp/logs/${SITE_CONFIG_FILE}.log" 2>&1
       then
-        echo "Success. "
+        echo -e "${GREEN}Success. ${NC}"
       else
-        echo "Failed, code $?. "
+        echo -e "${RED}Failed, code $?. ${NC}"
         EXIT_CODE=1
     fi
   done
 
 # delete current in_prod tag
-echo "Updating 'in_prod' tag in Github.."
+echo -e "${WHITE}Updating 'in_prod' tag in Github..${NC}"
 git tag -d in_prod 2>&1 | indent
 git push origin :refs/tags/in_prod 2>&1 | indent
 
@@ -83,7 +83,7 @@ git push origin refs/tags/in_prod 2>&1 | indent
 
 
 # switch to logs
-echo "Preping to save logs and  screenshots to origin/results.."
+echo -e "${WHITE}Preping to save logs and screenshots to origin/results.. ${NC}"
 git checkout -b results 2>&1 | indent
 git fetch --all 2>&1 | indent
 git branch -u origin/results 2>&1 | indent
@@ -93,18 +93,18 @@ git reset --hard origin/results 2>&1 | indent
 git pull --no-commit -X theirs origin master 2>&1 | indent
 
 # copy logs to logs directory
-echo "Updating logs/ with new logs.."
+echo -e "${WHITE}Updating logs/ with new logs..${NC}"
 cp -a /tmp/logs/* logs/ 2>&1 | indent
 
 # create screenshots of all new items.
 for SITE_CONFIG in ${MODIFIED_CONFIGS}
   do
-    echo "Taking Screenshots of objects in ${SITE_CONFIG}.. "
+    echo "${WHITE}Taking Screenshots of objects in ${SITE_CONFIG}.. ${NC}"
     if python3 ./screenshot.py "${SITE_CONFIG}"
       then
-        echo "Success. "
+        echo -e "${GREEN}Success. ${NC}"
       else
-        echo "Failed, code $?. "
+        echo -e "${RED}Failed, code $?. ${NC}"
         EXIT_CODE=1
     fi
   done
@@ -120,7 +120,12 @@ git push origin results 2>&1 | indent
 #git reflog
 #git remote -v
 
-echo "Finished!"
+if [ ${EXIT_CODE} == 0 ]
+  then
+    echo "${GREEN}Finished! (Success)${NC}"
+  else
+    echo "${RED}Finished! (Failed)${NC}"
+fi
 exit ${EXIT_CODE}
 
 
