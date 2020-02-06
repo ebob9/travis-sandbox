@@ -9,18 +9,27 @@
 
 ### Interfaces
 <img alt="Interfaces Summary" src="interfaces_summary.png" width="1110">
+<ul>
+<li>
+<A href="interfaces/README.md">Interfaces Detail</A>
+</li>
+</ul>
 
- - [1](interfaces/1.png)
- - [2](interfaces/2.png)
- - [controller 1](interfaces/controller 1.png)
 
-### Routing/BGP
+### Routing/BGP Peers
 <img alt="BGP Peers" src="bgp_peers.png" width="1110">
 
- - [Route Maps](bgp_route_maps.png)
- - [AS-Path Access Lists](bgp_aspath_acl.png)
- - [Prefix Lists](bgp_prefix_lists.png)
- - [IP Community Lists](bgp_ip_community_lists.png)
+### Routing/BGP Route Maps
+<img alt="BGP Route Maps" src="bgp_route_maps.png" width="1110">
+
+### Routing/BGP AS-Path Access Lists
+<img alt="BGP Peers" src="bgp_aspath_acl.png" width="1110">
+
+### Routing/BGP Prefix Lists
+<img alt="BGP Peers" src="bgp_prefix_lists.png" width="1110">
+
+### Routing/BGP Peers
+<img alt="BGP Peers" src="bgp_ip_community_lists.png" width="1110">
 
 ### Routing/Static
 <img alt="Static Routes" src="static_routes.png" width="1110">
