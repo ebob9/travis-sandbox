@@ -76,7 +76,7 @@ git push origin refs/tags/in_prod 2>&1 | indent
 
 
 # switch to logs
-echo "Saving logs and taking screenshots to origin/results.."
+echo "Preping to save logs and  screenshots to origin/results.."
 git checkout -b results 2>&1 | indent
 git fetch --all 2>&1 | indent
 git branch -u origin/results 2>&1 | indent
@@ -86,12 +86,13 @@ git reset --hard origin/results 2>&1 | indent
 git pull --no-commit -X theirs origin master 2>&1 | indent
 
 # copy logs to logs directory
+echo "Updating logs/ with new logs.."
 cp -a /tmp/logs/* logs/ 2>&1 | indent
 
 # create screenshots of all new items.
 for SITE_CONFIG in ${MODIFIED_CONFIGS}
   do
-    echo "Taking Screenshots of objects in ${SITE_CONFIG}: "
+    echo "Taking Screenshots of objects in ${SITE_CONFIG}.. "
     if python3 ./screenshot.py "${SITE_CONFIG}"
       then
         echo "Success. "

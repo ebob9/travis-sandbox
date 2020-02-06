@@ -190,8 +190,9 @@ driver.header_overrides = {
 print("    Logging in and taking topology screenshot: ", end="")
 uri = UI_TOPOLOGY_PAGE.format(region)
 filename = "screenshots/map.png"
+# add a bit for tweak delay as tiles may take a while to load.
 screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='leaflet-map-pane',
-                click_xpath=XPATH_CLOSE_WHATS_NEW)
+                click_xpath=XPATH_CLOSE_WHATS_NEW, load_tweak_delay=8)
 print("Done")
 
 
