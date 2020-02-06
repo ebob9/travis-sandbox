@@ -1,33 +1,16 @@
-## Updated CloudGenix Topology (Thu Feb  6 18:55:29 UTC 2020)
-from commit:390ba8c6f362019afeeaa7a7708125706f649bc1 
+## Updated CloudGenix Topology (Thu Feb  6 20:04:28 UTC 2020)
+from commit:f137faf0e4b41e975216f5c83dbea4357c64f2d9 
 <img alt="Map Image" src="map.png?raw=1" width="1110">
 
 ### All Sites (updated in this commit and previous commits):
 
 <ul>
 <li><A href="AWS-OregonWest2DC/README.md">AWS-OregonWest2DC</A>
-<li><A href="Azure/README.md">Azure</A>
-<li><A href="Central/README.md">Central</A>
-<li><A href="US/README.md">US</A>
-<li><A href="Chicago/README.md">Chicago</A>
-<li><A href="Branch/README.md">Branch</A>
-<li><A href="2/README.md">2</A>
-<li><A href="New/README.md">New</A>
-<li><A href="York/README.md">York</A>
-<li><A href="Branch/README.md">Branch</A>
-<li><A href="1/README.md">1</A>
-<li><A href="Oracle/README.md">Oracle</A>
-<li><A href="DC/README.md">DC</A>
-<li><A href="San/README.md">San</A>
-<li><A href="Francisco/README.md">Francisco</A>
-<li><A href="DC/README.md">DC</A>
-<li><A href="1/README.md">1</A>
-<li><A href="Seattle/README.md">Seattle</A>
-<li><A href="Branch/README.md">Branch</A>
-<li><A href="3/README.md">3</A>
-<li><A href="Washington/README.md">Washington</A>
-<li><A href="D.C./README.md">D.C.</A>
-<li><A href="-/README.md">-</A>
-<li><A href="DC/README.md">DC</A>
-<li><A href="2/README.md">2</A>
+<li><A href="Azure Central US/README.md">Azure Central US</A>
+<li><A href="Chicago Branch 2/README.md">Chicago Branch 2</A>
+<li><A href="New York Branch 1/README.md">New York Branch 1</A>
+<li><A href="Oracle DC/README.md">Oracle DC</A>
+<li><A href="San Francisco DC 1/README.md">San Francisco DC 1</A>
+<li><A href="Seattle Branch 3/README.md">Seattle Branch 3</A>
+<li><A href="Washington D.C. - DC 2/README.md">Washington D.C. - DC 2</A>
 

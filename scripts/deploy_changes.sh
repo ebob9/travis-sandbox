@@ -20,6 +20,9 @@ NC='\033[0m'
 
 EXIT_CODE=0
 
+# Set IFS to LF to handle spaces.
+IFS=$'\n'
+
 # Indent and pretty-fi function
 indent() { sed 's/^/    /'; }
 
@@ -43,9 +46,6 @@ git remote add origin "https://travisci-worker-ebob9:${GITHUB_REPO_TOKEN}@github
 # Get latest commit tagged in production
 CGX_COMMIT_IN_PROD=$(git show-ref -s in_prod)
 echo -e "${WHITE}Latest 'in_prod' commit:${NC} ${CGX_COMMIT_IN_PROD}"
-
-# Set IFS to LF to handle spaces.
-IFS=$'\n'
 
 # Get modified from current master commit and latest in_prod commit.
 MODIFIED_CONFIGS=$(git diff "${CGX_COMMIT_IN_PROD}" "${TRAVIS_COMMIT}" --diff-filter=ACMR --name-status | cut -f2 \
@@ -95,6 +95,22 @@ git pull --no-commit -X theirs origin master 2>&1 | indent
 # copy logs to logs directory
 echo -e "${WHITE}Updating logs/ with new logs..${NC}"
 cp -a /tmp/logs/* logs/ 2>&1 | indent
+
+## push logs to results repository. Using 2nd script for screenshots, uncomment this if you want deploy_changes.sh to be
+## standalone.
+#echo -e "${WHITE}Pushing results to origin/results.. ${NC}"
+#git add -A logs/* 2>&1 | indent
+#git add -A screenshots/* 2>&1 | indent
+#git commit -m 'Configuration Log and Screenshot Results [ci skip]' 2>&1 | indent
+#git push origin results 2>&1 | indent
+
+## Debug push items
+#git log --full-history
+#git reflog
+#git remote -v
+
+# save changed files for later scripts.
+echo "${MODIFIED_CONFIGS}" > .tmp_modified_configs.txt
 
 if [ ${EXIT_CODE} == 0 ]
   then
