@@ -23,6 +23,6 @@ install:
   - pip install cloudgenix_config
 
 script:
-  - bash ./deploy_changes.sh
-  - bash ./take_screenshots.sh
-  - bash ./push_results.sh
+  - bash ./scripts/deploy_changes.sh
+  - bash ./scripts/take_screenshots.sh
+  - bash ./scripts/push_results.sh

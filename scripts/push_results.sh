@@ -40,9 +40,9 @@ git push origin results 2>&1 | indent
 
 if [ ${EXIT_CODE} == 0 ]
   then
-    echo "${GREEN}Finished! (Success)${NC}"
+    echo -e "${GREEN}Finished! (Success)${NC}"
   else
-    echo "${RED}Finished! (Failed)${NC}"
+    echo -e "${RED}Finished! (Failed)${NC}"
 fi
 exit ${EXIT_CODE}
 

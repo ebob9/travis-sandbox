@@ -30,7 +30,7 @@ indent() { sed 's/^/    /'; }
 for SITE_CONFIG in ${MODIFIED_CONFIGS}
   do
     echo -e "${WHITE}Taking Screenshots of objects in ${SITE_CONFIG}.. ${NC}"
-    if python3 ./screenshot.py "${SITE_CONFIG}"
+    if python3 ./scripts/screenshot.py "${SITE_CONFIG}"
       then
         echo -e "${GREEN}Success. ${NC}"
       else
@@ -64,9 +64,9 @@ cd .. || { echo -e "${RED}Could not cd to parent directory. Exiting.${NC}"; exit
 
 if [ ${EXIT_CODE} == 0 ]
   then
-    echo "${GREEN}Finished! (Success)${NC}"
+    echo -e "${GREEN}Finished! (Success)${NC}"
   else
-    echo "${RED}Finished! (Failed)${NC}"
+    echo -e "${RED}Finished! (Failed)${NC}"
 fi
 exit ${EXIT_CODE}
 
