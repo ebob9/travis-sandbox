@@ -99,7 +99,7 @@ cp -a /tmp/logs/* logs/ 2>&1 | indent
 # create screenshots of all new items.
 for SITE_CONFIG in ${MODIFIED_CONFIGS}
   do
-    echo "${WHITE}Taking Screenshots of objects in ${SITE_CONFIG}.. ${NC}"
+    echo -e "${WHITE}Taking Screenshots of objects in ${SITE_CONFIG}.. ${NC}"
     if python3 ./screenshot.py "${SITE_CONFIG}"
       then
         echo -e "${GREEN}Success. ${NC}"
@@ -130,6 +130,10 @@ for DIRECTORY in $(ls -d */ | cut -f1 -d'/')
     } >> README.md
   done
 echo '<\ul>' >> README.md
+
+# return back to parent directory
+cd .. || { echo -e "${RED}Could not cd to parent directory. Exiting.${NC}"; exit 1; }
+
 
 # push logs and screenshots to results repository
 git add -A logs/* 2>&1 | indent
