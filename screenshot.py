@@ -17,12 +17,20 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 
+
+# Create output function because print doesn't seem to flush enough
+def ci_print(text, end="\n"):
+    sys.stdout.write(text + end)
+    sys.stdout.flush()
+    return
+
+
 # Get CGX auth_token
 if "AUTH_TOKEN" in os.environ:
     CLOUDGENIX_AUTH_TOKEN = os.environ.get('AUTH_TOKEN')
 else:
     # no AUTH_TOKEN
-    print("ERROR: No AUTH_TOKEN available for screenshots. Exiting.")
+    ci_print("ERROR: No AUTH_TOKEN available for screenshots. Exiting.")
     sys.exit(1)
 
 # Globals
@@ -107,7 +115,7 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
                 pass
 
     except TimeoutException:
-        print("WARNING: Loading Page {0}, waiting for {1} '{2}' took longer than {3} seconds. Saving data that exists."
+        ci_print("WARNING: Loading Page {0}, waiting for {1} '{2}' took longer than {3} seconds. Saving data that exists."
               "".format(page_uri, waitfor, waitfor_value, load_wait))
 
     if click_xpath is not None:
@@ -124,9 +132,9 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
 
 # quick check we have 1 argument.
 if len(sys.argv) != 2:
-    print("ERROR: This script takes exactly 1 command line argument. Got the following: ")
+    ci_print("ERROR: This script takes exactly 1 command line argument. Got the following: ")
     for arg in sys.argv:
-        print(arg)
+        ci_print(arg)
     sys.exit(1)
 
 # just one argument, it hopefully is the config file.
@@ -137,7 +145,7 @@ try:
     with open(config_file, 'r') as datafile:
         loaded_config = yaml.safe_load(datafile)
 except IOError as e:
-    print("ERROR: Could not open file {0}: {1}".format(config_file, e))
+    ci_print("ERROR: Could not open file {0}: {1}".format(config_file, e))
     sys.exit(1)
 
 # let user know it worked.
@@ -201,7 +209,7 @@ for site_name, elements_list in sites_dict.items():
     site_id = sites_n2id.get(site_name)
     if site_id is None:
         # something wrong with this site. Print and continue.
-        print("WARNING: Could not get Site ID for Site {0}, skipping..".format(site_name))
+        ci_print("WARNING: Could not get Site ID for Site {0}, skipping..".format(site_name))
         continue
     site_filesafer_name = sanitize_filename(site_name)
     site_directory = "screenshots/{0}/".format(site_filesafer_name)
@@ -209,17 +217,17 @@ for site_name, elements_list in sites_dict.items():
     pathlib.Path(site_directory).mkdir(parents=True, exist_ok=True)
 
     # Get SITE page
-    print("    Taking Screenshot of Site '{0}' Site Map Card: ".format(site_name), end="")
+    ci_print("    Taking Screenshot of Site '{0}' Site Map Card: ".format(site_name), end="")
     uri = UI_SITE_PAGE.format(region, site_id)
     filename = site_directory + "{0}.site-info.png".format(site_name)
     screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='site-info')
-    print("Done")
+    ci_print("Done")
 
     for element_name in elements_list:
         element_id = elements_n2id.get(element_name)
         if element_id is None:
             # something wrong with this element. Print and continue.
-            print("WARNING: Could not get Element ID for Element {0}, skipping..".format(element_name))
+            ci_print("WARNING: Could not get Element ID for Element {0}, skipping..".format(element_name))
             continue
         element_filesafer_name = sanitize_filename(element_name)
         element_directory = site_directory + "{0}/".format(element_filesafer_name)
@@ -228,43 +236,43 @@ for site_name, elements_list in sites_dict.items():
         # Note, static/bgp pages can get stuck, if we navigate to any other page after, it works fine.
 
         # Static Routes
-        print("      Taking Screenshot of Element '{0}' Static Routes: ".format(element_name), end="")
+        ci_print("      Taking Screenshot of Element '{0}' Static Routes: ".format(element_name), end="")
         uri = UI_ELEMENT_STATICROUTES.format(region, element_id)
         filename = element_directory + "static_routes.png"
         # first element item can take a bit while modal/backend stuff is cached. wait longer. Not needed mostly.
         screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='static-routing-table', load_wait=60)
-        print("Done")
+        ci_print("Done")
 
         # Basic config
-        print("      Taking Screenshot of Element '{0}' Basic Config: ".format(element_name), end="")
+        ci_print("      Taking Screenshot of Element '{0}' Basic Config: ".format(element_name), end="")
         uri = UI_ELEMENT_BASIC.format(region, element_id)
         filename = element_directory + "basic_info.png"
         screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='form-group')
-        print("Done")
+        ci_print("Done")
 
         # BGP Peers table
-        print("      Taking Screenshot of Element '{0}' BGP Peers: ".format(element_name), end="")
+        ci_print("      Taking Screenshot of Element '{0}' BGP Peers: ".format(element_name), end="")
         uri = UI_ELEMENT_BGPPEERS.format(region, element_id)
         filename = element_directory + "bgp_peers.png".format(site_name, element_name)
         screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='bgpPeersTable')
-        print("Done")
+        ci_print("Done")
 
         # Device toolkit
-        print("      Taking Screenshot of Element '{0}' Device Toolkit: ".format(element_name), end="")
+        ci_print("      Taking Screenshot of Element '{0}' Device Toolkit: ".format(element_name), end="")
         uri = UI_ELEMENT_TOOLKIT.format(region, element_id)
         filename = element_directory + "device_toolkit.png".format(site_name, element_name)
         screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='form-group')
-        print("Done")
+        ci_print("Done")
 
         # BGP Route Maps
-        print("      Taking Screenshot of Element '{0}' BGP Route Maps: ".format(element_name), end="")
+        ci_print("      Taking Screenshot of Element '{0}' BGP Route Maps: ".format(element_name), end="")
         uri = UI_ELEMENT_BGPROUTEMAPS.format(region, element_id)
         filename = element_directory + "bgp_route_maps.png"
         screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='routeMapsTable')
-        print("Done")
+        ci_print("Done")
 
         # Interfaces summary
-        print("      Taking Screenshot of Element '{0}' Interfaces Summary: ".format(element_name), end="")
+        ci_print("      Taking Screenshot of Element '{0}' Interfaces Summary: ".format(element_name), end="")
         uri = UI_ELEMENT_INTERFACES.format(region, element_id)
         filename = element_directory + "interfaces_summary.png"
         # bump window size up for Interfaces screen.
@@ -272,49 +280,49 @@ for site_name, elements_list in sites_dict.items():
         screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='interface_name-wrapper')
         # Set size back..
         driver.set_window_size(1920, 1080)
-        print("Done")
+        ci_print("Done")
 
         # BGP Prefixlists
-        print("      Taking Screenshot of Element '{0}' BGP Prefix Lists: ".format(element_name), end="")
+        ci_print("      Taking Screenshot of Element '{0}' BGP Prefix Lists: ".format(element_name), end="")
         uri = UI_ELEMENT_BGPPREFIXLISTS.format(region, element_id)
         filename = element_directory + "bgp_prefix_lists.png"
         screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='prefixListsTable')
-        print("Done")
+        ci_print("Done")
 
         # SNMP
         uri = UI_ELEMENT_SNMP.format(region, element_id)
-        print("      Taking Screenshot of Element '{0}' SNMP: ".format(element_name), end="")
+        ci_print("      Taking Screenshot of Element '{0}' SNMP: ".format(element_name), end="")
         filename = element_directory + "snmp.png".format(site_name, element_name)
         screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='snmpAgentView')
-        print("Done")
+        ci_print("Done")
 
         # BGP ASPATH ACL
-        print("      Taking Screenshot of Element '{0}' BGP AS-PATH Access Lists: ".format(element_name), end="")
+        ci_print("      Taking Screenshot of Element '{0}' BGP AS-PATH Access Lists: ".format(element_name), end="")
         uri = UI_ELEMENT_BGPASPATHACL.format(region, element_id)
         filename = element_directory + "bgp_aspath_acl.png"
         screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='asPathListsTable')
-        print("Done")
+        ci_print("Done")
 
         # SYSLOG
-        print("      Taking Screenshot of Element '{0}' SYSLOG:  ".format(element_name), end="")
+        ci_print("      Taking Screenshot of Element '{0}' SYSLOG:  ".format(element_name), end="")
         uri = UI_ELEMENT_SYSLOG.format(region, element_id)
         filename = element_directory + "syslog.png"
         screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='syslog-export-table')
-        print("Done")
+        ci_print("Done")
 
         # BGP IP COMMUNITY Lists
-        print("      Taking Screenshot of Element '{0}' BGP IP Community Lists: ".format(element_name), end="")
+        ci_print("      Taking Screenshot of Element '{0}' BGP IP Community Lists: ".format(element_name), end="")
         uri = UI_ELEMENT_BGPIPCOMMUNITYLISTS.format(region, element_id)
         filename = element_directory + "bgp_ip_community_lists.png"
         screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='ipCommunityListsTable')
-        print("Done")
+        ci_print("Done")
 
         # NTP
-        print("      Taking Screenshot of Element '{0}' NTP: ".format(element_name), end="")
+        ci_print("      Taking Screenshot of Element '{0}' NTP: ".format(element_name), end="")
         uri = UI_ELEMENT_NTP.format(region, element_id)
         filename = element_directory + "ntp.png"
         screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='ntp-servers-table')
-        print("Done")
+        ci_print("Done")
 
         # get some interface screenshots.
         interfaces_cache = sdk.extract_items(sdk.get.interfaces(site_id, element_id))
@@ -332,12 +340,12 @@ for site_name, elements_list in sites_dict.items():
                 interface_filesafer_name = sanitize_filename(interface_name)
 
                 # interface get!
-                print("        Taking Screenshot of Interface '{0}' Configuration: ".format(interface_name), end="")
+                ci_print("        Taking Screenshot of Interface '{0}' Configuration: ".format(interface_name), end="")
                 uri = UI_INTERFACES_DETAIL.format(region, element_id, interface_id)
                 filename = interface_directory + "{0}.png".format(interface_filesafer_name)
                 screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='port_config_form_nav',
                                 click_xpath=XPATH_INTERFACE_ADVANCED_OPTIONS)
-                print("Done")
+                ci_print("Done")
 
             # Set window size back..
             driver.set_window_size(1920, 1080)
