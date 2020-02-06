@@ -1,11 +1,12 @@
+sudo: required  # not actually required, just allocates 7.5 GB system instead of 4 GB
 language: python
 
 branches:
   only:
-  - master
+  - master  # This will be whatever branch we want to be the "production" branch.
 
 addons:
-  chrome: stable
+  chrome: stable  # For screenshots of completed builds.
 
 python:
   - "3.7"
