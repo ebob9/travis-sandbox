@@ -11,6 +11,13 @@
 # GITHUB_REPO_TOKEN = Valid personal token that has Repository access to commit.
 # TRAVIS_COMMIT = Current commit hash
 
+# Color constants
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+WHITE='\033[1;37m'
+NC='\033[0m'
+
 EXIT_CODE=0
 
 # Indent and pretty-fi function
@@ -20,7 +27,7 @@ indent() { sed 's/^/    /'; }
 #set -x
 
 # Set up git for log commit back to master.
-echo "Setting GIT authentication/origin.."
+echo "${WHITE}Setting GIT authentication/origin..${NC}"
 git config --global user.email "travisci-worker-ebob9@travis-ci.org" 2>&1 2>&1 | indent
 git config --global user.name "travisci-worker-ebob9" 2>&1 | indent
 

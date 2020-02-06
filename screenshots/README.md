@@ -1,6 +1,9 @@
-## CloudGenix Topology
+## Updated CloudGenix Topology
 <img alt="Map Image" src="map.png" width="1110">
 
-### Sites
- - [Oracle DC](Oracle DC/README.md)
-
+### Updated Sites
+<ul>
+<li>
+<A href="Oracle DC/README.md">Oracle DC</A>
+</li>
+</ul>
