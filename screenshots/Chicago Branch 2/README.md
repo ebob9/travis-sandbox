@@ -1,6 +1,6 @@
 ## Site: Chicago Branch 2
 [Back To Topology](../README.md)
-<img alt="Site Card" src="site-info?raw=1" width="1110">
+<img alt="Site Card" src="site-info.png?raw=1" width="1110">
 
 ### Elements
 <ul>
