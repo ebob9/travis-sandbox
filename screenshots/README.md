@@ -1,16 +1,16 @@
 ## Updated CloudGenix Topology
-from commit c5416056c336d2a361a11d944dab0004b73ad638 to a63486a51636638fa986b0ff28ebdac94adc59a9:
-<img alt="Map Image" src="map.png" width="1110">
+from commit a63486a51636638fa986b0ff28ebdac94adc59a9 to 6d0edb037e8fb37f4e771dc9afdeaba2749750aa:
+<img alt="Map Image" src="map.png?raw=1" width="1110">
 
 ### Updated Sites
-from commit c5416056c336d2a361a11d944dab0004b73ad638 to a63486a51636638fa986b0ff28ebdac94adc59a9:
+from commit a63486a51636638fa986b0ff28ebdac94adc59a9 to 6d0edb037e8fb37f4e771dc9afdeaba2749750aa:
 <ul>
-<li><A href="AWS-OregonWest2DC/README.md">AWS-OregonWest2DC</A><\li>
-<li><A href="Azure Central US/README.md">Azure Central US</A><\li>
-<li><A href="Chicago Branch 2/README.md">Chicago Branch 2</A><\li>
-<li><A href="New York Branch 1/README.md">New York Branch 1</A><\li>
-<li><A href="Oracle DC/README.md">Oracle DC</A><\li>
-<li><A href="San Francisco DC 1/README.md">San Francisco DC 1</A><\li>
-<li><A href="Seattle Branch 3/README.md">Seattle Branch 3</A><\li>
-<li><A href="Washington D.C. - DC 2/README.md">Washington D.C. - DC 2</A><\li>
-<\ul>
+<li><A href="AWS-OregonWest2DC/README.md">AWS-OregonWest2DC</A>
+<li><A href="Azure Central US/README.md">Azure Central US</A>
+<li><A href="Chicago Branch 2/README.md">Chicago Branch 2</A>
+<li><A href="New York Branch 1/README.md">New York Branch 1</A>
+<li><A href="Oracle DC/README.md">Oracle DC</A>
+<li><A href="San Francisco DC 1/README.md">San Francisco DC 1</A>
+<li><A href="Seattle Branch 3/README.md">Seattle Branch 3</A>
+<li><A href="Washington D.C. - DC 2/README.md">Washington D.C. - DC 2</A>
+

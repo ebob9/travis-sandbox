@@ -115,7 +115,7 @@ cd screenshots || { echo -e "${RED}Could not cd to screenshots. Exiting.${NC}"; 
 {
   echo "## Updated CloudGenix Topology"
   echo "from commit ${CGX_COMMIT_IN_PROD} to ${TRAVIS_COMMIT}:"
-  echo '<img alt="Map Image" src="map.png" width="1110">'
+  echo '<img alt="Map Image" src="map.png?raw=1" width="1110">'
   echo ''
   echo "### Updated Sites"
   echo "from commit ${CGX_COMMIT_IN_PROD} to ${TRAVIS_COMMIT}:"
@@ -125,9 +125,9 @@ cd screenshots || { echo -e "${RED}Could not cd to screenshots. Exiting.${NC}"; 
 # iterate directories.
 for DIRECTORY in $(ls -d */ | cut -f1 -d'/')
   do
-    echo "<li><A href=\"${DIRECTORY}/README.md\">${DIRECTORY}</A><\li>" >> README.md
+    echo "<li><A href=\"${DIRECTORY}/README.md\">${DIRECTORY}</A>" >> README.md
   done
-echo '<\ul>' >> README.md
+echo '' >> README.md
 
 # return back to parent directory
 cd .. || { echo -e "${RED}Could not cd to parent directory. Exiting.${NC}"; exit 1; }
