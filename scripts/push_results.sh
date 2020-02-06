@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Execute all config changes in a repo from the last 'in_prod' tag.
+# Push Results from previous scripts.
 # Update 'in_prod' if successful.
 #
 # Script assumes CWD is a git repo and has the branch/commit that should be compared to 'in_prod' checked out.
@@ -19,6 +19,9 @@ WHITE='\033[1;37m'
 NC='\033[0m'
 
 EXIT_CODE=0
+
+# Set IFS to LF to handle spaces.
+IFS=$'\n'
 
 # Indent and pretty-fi function
 indent() { sed 's/^/    /'; }

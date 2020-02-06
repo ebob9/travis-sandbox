@@ -20,11 +20,17 @@ NC='\033[0m'
 
 EXIT_CODE=0
 
+# Set IFS to LF to handle spaces.
+IFS=$'\n'
+
 # Indent and pretty-fi function
 indent() { sed 's/^/    /'; }
 
 # Debug script (if needed)
 #set -x
+
+# load MODIFIED_CONFIGS from previous script.
+MODIFIED_CONFIGS=$(cat .tmp_modified_configs.txt)
 
 # create screenshots of all new items.
 for SITE_CONFIG in ${MODIFIED_CONFIGS}
