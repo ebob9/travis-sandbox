@@ -1,9 +1,9 @@
 ## Updated CloudGenix Topology
-from commit a63486a51636638fa986b0ff28ebdac94adc59a9 to 6d0edb037e8fb37f4e771dc9afdeaba2749750aa:
+from commit 6d0edb037e8fb37f4e771dc9afdeaba2749750aa to f828de557ad4b272385d5088865398d7448e4af2:
 <img alt="Map Image" src="map.png?raw=1" width="1110">
 
 ### Updated Sites
-from commit a63486a51636638fa986b0ff28ebdac94adc59a9 to 6d0edb037e8fb37f4e771dc9afdeaba2749750aa:
+from commit 6d0edb037e8fb37f4e771dc9afdeaba2749750aa to f828de557ad4b272385d5088865398d7448e4af2:
 <ul>
 <li><A href="AWS-OregonWest2DC/README.md">AWS-OregonWest2DC</A>
 <li><A href="Azure Central US/README.md">Azure Central US</A>
