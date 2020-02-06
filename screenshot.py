@@ -143,6 +143,7 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
                  color="yellow")
 
     if click_xpath is not None:
+        click_succeeded = 0
         # need to click on something quickly.
         if isinstance(click_index, list):
             # click multiple (interface)
@@ -150,24 +151,24 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
                 try:
                     click_dom = driver.find_elements_by_xpath(click_xpath)[index]
                     click_dom.click()
+                    click_succeeded += 1
                 except IndexError as e:
                     # got a miss on the DOM select/click. Let's continue without the click.
-                    ci_print("WARNING: Loading {0} Interface Expand #{1} click missed."
-                             "Continuing without click."
-                             "".format(page_uri, index + 1),
-                             color="yellow")
+                    pass
 
         else:
+            click_index = []
             # single click (not nec interface)
             try:
                 click_dom = driver.find_elements_by_xpath(click_xpath)[0]
                 click_dom.click()
+                click_succeeded += 1
             except IndexError as e:
                 # got a miss on the DOM select/click. Let's continue without the click.
-                ci_print("WARNING: Loading Page {0}, Clicking on element XPATH '{1}' Failed: {2}. "
-                         "Continuing without click."
-                         "".format(page_uri, click_xpath, e),
-                         color="yellow")
+                pass
+
+        # print status
+        ci_print("Click({0} of {1} succeeded): ", end="")
 
     # Tweak delay
     time.sleep(load_tweak_delay)
