@@ -37,6 +37,9 @@ git remote add origin "https://travisci-worker-ebob9:${GITHUB_REPO_TOKEN}@github
 CGX_COMMIT_IN_PROD=$(git show-ref -s in_prod)
 echo "Latest 'in_prod' commit: ${CGX_COMMIT_IN_PROD}"
 
+# Set IFS to LF to handle spaces.
+IFS=$'\n'
+
 # Get modified from current master commit and latest in_prod commit.
 MODIFIED_CONFIGS=$(git diff "${CGX_COMMIT_IN_PROD}" "${TRAVIS_COMMIT}" --diff-filter=ACMR --name-status | cut -f2 \
                    | grep 'configurations\/.*\.yml')
@@ -74,10 +77,10 @@ git push origin refs/tags/in_prod 2>&1 | indent
 
 # switch to logs
 echo "Saving logs to origin/logs.."
-git checkout -b logs 2>&1 | indent
+git checkout -b results 2>&1 | indent
 git fetch --all 2>&1 | indent
-git branch -u origin/logs 2>&1 | indent
-git reset --hard origin/logs 2>&1 | indent
+git branch -u origin/results 2>&1 | indent
+git reset --hard origin/results 2>&1 | indent
 
 # merge (w/overwrite) master to logs.
 git pull --no-commit -X theirs origin master 2>&1 | indent
