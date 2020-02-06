@@ -27,7 +27,7 @@ indent() { sed 's/^/    /'; }
 #set -x
 
 # Set up git for log commit back to master.
-echo "${WHITE}Setting GIT authentication/origin..${NC}"
+echo -e "${WHITE}Setting GIT authentication/origin..${NC}"
 git config --global user.email "travisci-worker-ebob9@travis-ci.org" 2>&1 2>&1 | indent
 git config --global user.name "travisci-worker-ebob9" 2>&1 | indent
 

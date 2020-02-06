@@ -1,20 +1,19 @@
 ## Element: OCI-7K-1
 [Back To Site](../README.md)
 
-### Basic Info
-<img alt="Basic Info" src="basic_info.png" width="1110">
-
-### Device Toolkit
-<img alt="Device Toolkit" src="device_toolkit.png" width="1110">
-
 ### Interfaces
-<img alt="Interfaces Summary" src="interfaces_summary.png" width="1110">
 <ul>
 <li>
 <A href="interfaces/README.md">Interfaces Detail</A>
 </li>
 </ul>
+<img alt="Interfaces Summary" src="interfaces_summary.png" width="1110">
 
+### Basic Info
+<img alt="Basic Info" src="basic_info.png" width="1110">
+
+### Device Toolkit
+<img alt="Device Toolkit" src="device_toolkit.png" width="1110">
 
 ### Routing/BGP Peers
 <img alt="BGP Peers" src="bgp_peers.png" width="1110">
