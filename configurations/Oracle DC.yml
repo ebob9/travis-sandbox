@@ -6,7 +6,7 @@ version: 1.0
 sites v4.4:
   Oracle DC:
     address:
-      city: Phoenix2
+      city: Phoenix
       country: United States
       post_code: '85003'
       state: AZ
