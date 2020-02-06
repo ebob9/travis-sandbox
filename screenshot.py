@@ -143,8 +143,15 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
 
     if click_xpath is not None:
         # need to click on something quickly.
-        click_dom = driver.find_elements_by_xpath(click_xpath)[0]
-        click_dom.click()
+        try:
+            click_dom = driver.find_elements_by_xpath(click_xpath)[0]
+            click_dom.click()
+        except IndexError as e:
+            # got a miss on the DOM select/click. Let's continue without the click.
+            ci_print("WARNING: Loading Page {0}, Clicking on element XPATH '{1}' Failed: {2}. "
+                     "Continuing without click."
+                     "".format(page_uri, click_xpath, e),
+                     color="yellow")
 
     # Tweak delay
     time.sleep(load_tweak_delay)
@@ -361,8 +368,10 @@ for site_name, elements_list in sites_dict.items():
         ci_print("Done", color="green")
 
         # get some interface screenshots.
-        interfaces_cache = sdk.extract_items(sdk.get.interfaces(site_id, element_id))
-        if len(interfaces_cache) >= 1:
+        interfaces_unsorted = sdk.extract_items(sdk.get.interfaces(site_id, element_id))
+        if len(interfaces_unsorted) >= 1:
+            # sort the interfaces by name, for cleaner output
+            interfaces_cache = sorted(interfaces_unsorted, key=lambda iface: iface['name'])
             # create interfaces directory, lets get some interface info.
             interface_directory = element_directory + "{0}/".format("interfaces")
             pathlib.Path(interface_directory).mkdir(parents=True, exist_ok=True)
@@ -497,12 +506,12 @@ for site in markdown_index:
         # update site readme MD with element info.
         site_readme_md += f"""\
 <li>
-<A href="f{element['fs_name']}/README.md">{element['name']}</A>
+<A href="{element['fs_name']}/README.md">{element['name']}</A>
 </li>
 """
 
     # finish site readme md
-    site_readme_md += """/
+    site_readme_md += """\
 </ul>
 """
 

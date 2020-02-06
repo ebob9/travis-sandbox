@@ -5,10 +5,9 @@
 ### Elements
 <ul>
 <li>
-<A href="fDC-7K-1/README.md">DC-7K-1</A>
+<A href="DC-7K-1/README.md">DC-7K-1</A>
 </li>
 <li>
-<A href="fDC-7K-2/README.md">DC-7K-2</A>
+<A href="DC-7K-2/README.md">DC-7K-2</A>
 </li>
-/
 </ul>
