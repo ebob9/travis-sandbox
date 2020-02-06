@@ -1,0 +1,665 @@
+---
+type: cloudgenix template
+version: 1.0
+# Created at 2020-02-06T07:54:54.671398Z
+# by aaron@cloudgenix.com
+sites v4.4:
+  New York Branch 1:
+    address:
+      city: Bronx
+      country: United States
+      post_code: '10452'
+      state: NY
+      street: 1 E 161st St
+      street2:
+    admin_state: active
+    description: My Description Is Better 12345New York Branch 1 New York Branch 1
+      New York Branch 102052020
+    element_cluster_role: SPOKE
+    elements v2.3:
+      NYC-ION-3K-1:
+        admin_action:
+        allowed_roles:
+        - HUB
+        - SPOKE
+        cluster_insertion_mode:
+        cluster_member_id:
+        connected: true
+        deployment_op:
+        description: This is a Test description
+        element_extensions v2.0:
+          FTP_LQM:
+            conf:
+              jitter: 50
+              jitter_en: true
+              latency: 150
+              latency_en: true
+              packet_loss: 3
+              packet_loss_en: true
+            disabled: false
+            entity_id: '14992953016970212'
+            namespace: thresholds/lqm/app
+          LQM for CGX-Demo:
+            conf:
+              jitter: 0
+              jitter_en: false
+              latency: 265
+              latency_en: true
+              packet_loss: 0
+              packet_loss_en: false
+            disabled: false
+            entity_id: '15150948428210255'
+            namespace: thresholds/lqm/app
+          fc config:
+            conf:
+              sub_optimal_flow_list_reval: true
+            disabled: false
+            entity_id: '8844'
+            namespace: fcconfig
+          google_apt:
+            conf:
+              app_id: '14992953008840202'
+              app_limits:
+                init_fail_pct:
+                  enabled: false
+                  hard_limit: 5
+                  soft_limit: 5
+                ntt:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+                pps:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+                rtt:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+                txn_fail_pct:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+              path_limits:
+            disabled: false
+            entity_id: '14992953008840202'
+            namespace: thresholds/apps
+          l3r_allapps_pwan:
+            conf:
+              enable: true
+            disabled: false
+            entity_id: NYC-T1-MPLS
+            namespace: l3rallapps/waninterface
+          netflow:
+            conf:
+              collectors:
+              - ip: 192.168.100.200
+                lan_snmp_id: 4
+                port: 2055
+                report_prio: true
+                wan_snmp_id: 3
+            disabled: false
+            entity_id: controller 1
+            namespace: netflowv5/interface
+        element_security_zones v2.0: []
+        interfaces v4.7:
+          '1':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description: NYC Comcast Broadband 50Mbps
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+              type: dhcp
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id: internet
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            - NYC-BR-INT
+            sub_interface:
+            tags:
+            type: port
+            used_for: public
+          '32':
+            admin_up: true
+            attached_lan_networks:
+            - lan_network_id: default_new-york-branch-1_36204899
+              vlan_id: 0
+            - lan_network_id: default_new-york-branch-1_320011307
+              vlan_id: 0
+            - lan_network_id: default_new-york-branch-1_321596037
+              vlan_id: 0
+            bound_interfaces:
+            bypass_pair:
+              lan: '2'
+              lan_state_propagation: false
+              use_relay: false
+              wan: '3'
+            description: 'Bypass Pair: 2 = LAN | 3 = WAN '
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            - NYC-T1-MPLS
+            sub_interface:
+            tags:
+            type: bypasspair
+            used_for: private-l2
+          '4':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description: NYC MPLS T1
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+                name_servers:
+                - 8.8.4.4
+              routes:
+              - destination: 0.0.0.0/0
+                via: 192.168.22.18
+              static_config:
+                address: 192.168.22.17/28
+              type: static
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            - NYC-T1-MPLS
+            sub_interface:
+            tags:
+            type: port
+            used_for: private
+          '5':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '6':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '7':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '8':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '9':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          controller 1:
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description: '     #serial:4211376e-263e-dce0-e8b0-035424f94c2a'
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+                name_servers:
+                - 8.8.8.8
+              routes:
+              - destination: 0.0.0.0/0
+                via: 192.168.20.1
+              static_config:
+                address: 192.168.20.10/24
+              type: static
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          sl-zscaler-14994857099260180:
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description: Created by ZScaler Integration App
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+                address: 192.168.237.1/30
+              type: static
+            mac_address:
+            mtu: 1300
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent: '1'
+            pppoe_config:
+            scope: local
+            service_link_config:
+              ipsec_config:
+                authentication:
+                  certificate:
+                  ikev1_params:
+                  local_ca_certificate:
+                  local_id: custom
+                  local_id_custom: 15511316775120242_1092@demo-cloudgenix.com
+                  passphrase:
+                  private_key:
+                  remote_ca_certificate:
+                  remote_id:
+                  secret:
+                  type: psk
+                ipsec_profile_id: ZSCALER_IKEV1
+              peer:
+              service_endpoint_id: US-East-Zscaler
+              type: ipsec
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            - Zscaler-integrator-managed
+            type: service_link
+            used_for: none
+        l3_direct_private_wan_forwarding: false
+        l3_lan_forwarding: false
+        model_name: ion 3102v
+        nat_policysetstack_id:
+        network_policysetstack_id:
+        ntp v2.0:
+        - description: Default NTP template created by super user.
+          name: default
+          ntp_servers:
+          - host: 0.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 1.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 2.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 3.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: time.nist.gov
+            max_poll: 15
+            min_poll: 13
+            version: 4
+          source_interface_ids:
+          tags:
+        priority_policysetstack_id:
+        role: SPOKE
+        routing:
+          bgp:
+            global_config v2.1:
+              admin_distance: 20
+              adv_interval: 1
+              graceful_restart: false
+              hold_time: 90
+              keepalive_time: 30
+              local_as_num:
+              maximum_paths: 1
+              md5_secret:
+              multi_hop_limit: 1
+              peer_retry_time: 120
+              prefix_adv_type:
+              prefix_adv_type_to_lan: default
+              prefixes_to_adv_to_wan:
+              router_id:
+              stalepath_time: 120
+          static v2.0:
+          - description:
+            destination_prefix: 192.168.20.0/24
+            network_context_id:
+            nexthops:
+            - admin_distance: 1
+              nexthop_interface_id:
+              nexthop_ip: 192.168.22.1
+              self: false
+            scope: global
+            tags:
+          - description:
+            destination_prefix: 192.168.21.0/24
+            network_context_id:
+            nexthops:
+            - admin_distance: 1
+              nexthop_interface_id:
+              nexthop_ip: 192.168.22.1
+              self: false
+            scope: global
+            tags:
+        serial_number: 4211376e-263e-dce0-e8b0-035424f94c2a
+        snmp:
+          agent v2.0:
+          - description:
+            tags:
+            v2_config:
+              community: public
+              enabled: true
+            v3_config:
+          traps v2.0:
+          - description:
+            enabled: true
+            server_ip: 192.168.100.10
+            source_interface: controller 1
+            tags:
+            v2_config:
+              community: cloudgenix123
+            v3_config:
+            version: v2
+        software_version: 5.1.9-b10
+        spoke_ha_config:
+        state: bound
+        syslog v2.1:
+        - description:
+          enable_flow_logging: false
+          enabled: true
+          name: justplugin_syslog
+          protocol: udp
+          server_ip: 192.168.100.10
+          server_port: 514
+          severity_level: minor
+          source_interface: controller 1
+          tags:
+        tags:
+        tenant_id: '1092'
+        toolkit v2.2:
+          account_disable_interval: 5
+          inactive_interval: 15
+          otpkey_version: 1
+          retry_login_count: 5
+          ssh_enabled: true
+          ssh_outbound_enabled: false
+        vpn_to_vpn_forwarding: false
+    lannetworks v3.1:
+      default_new-york-branch-1_320011307:
+        description:
+        ipv4_config:
+          default_routers:
+          - 192.168.21.1/24
+          dhcp_relay:
+          dhcp_server:
+          prefixes:
+        network_context_id: Guest
+        scope: global
+        tags:
+      default_new-york-branch-1_321596037:
+        description:
+        ipv4_config:
+          default_routers:
+          - 192.168.22.2/28
+          dhcp_relay:
+          dhcp_server:
+          prefixes:
+        network_context_id:
+        scope: global
+        tags:
+      default_new-york-branch-1_36204899:
+        description:
+        ipv4_config:
+          default_routers:
+          - 192.168.20.1/24
+          dhcp_relay:
+          dhcp_server:
+          prefixes:
+        network_context_id:
+        scope: global
+        tags:
+    location:
+      description:
+      latitude: 40.829185485839844
+      longitude: -73.92875671386719
+    nat_policysetstack_id: Default-NATPolicySetStack
+    network_policysetstack_id: Simple_Demo (Simple)
+    policy_set_id:
+    priority_policysetstack_id: Simple_QoS (Simple)
+    security_policyset_id:
+    service_binding: East Coast Branches
+    site_extensions v2.0:
+      bfd:
+        conf:
+          multi_hop: true
+        disabled: false
+        entity_id:
+        namespace: routing/bfd
+    site_security_zones v2.0:
+    - networks:
+      - network_id: NYC-T1-MPLS
+        network_type: wan_network
+      - network_id: zbfw_overlay
+        network_type: wan_overlay
+      zone_id: Corp-WAN
+    - networks:
+      - network_id: default_new-york-branch-1_321596037
+        network_type: lan_network
+      - network_id: default_new-york-branch-1_36204899
+        network_type: lan_network
+      zone_id: Corp-LAN
+    - networks:
+      - network_id: NYC-BR-INT
+        network_type: wan_network
+      zone_id: Outside
+    - networks:
+      - network_id: default_new-york-branch-1_320011307
+        network_type: lan_network
+      zone_id: Guest
+    tags:
+    - AUTO-zscaler
+    waninterfaces v2.4:
+      NYC-BR-INT:
+        bfd_mode: aggressive
+        bw_config_mode: manual
+        bwc_enabled: true
+        cost: 128
+        description:
+        label_id: Internet Cable
+        link_bw_down: 50.0
+        link_bw_up: 50.0
+        lqm_config:
+        lqm_enabled: true
+        network_id: Comcast Internet
+        network_type: publicwan
+        tags:
+      NYC-T1-MPLS:
+        bfd_mode: aggressive
+        bw_config_mode: manual
+        bwc_enabled: true
+        cost: 128
+        description: ''
+        label_id: MPLS
+        link_bw_down: 1.5
+        link_bw_up: 1.5
+        lqm_config:
+        lqm_enabled: true
+        network_id: Verizon-MPLS
+        network_type: privatewan
+        tags:
