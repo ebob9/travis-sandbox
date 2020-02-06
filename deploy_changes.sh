@@ -83,7 +83,7 @@ git push origin refs/tags/in_prod 2>&1 | indent
 
 
 # switch to logs
-echo -e "${WHITE}Preping to save logs and screenshots to origin/results.. ${NC}"
+echo -e "${WHITE}Preping to save logs to origin/results.. ${NC}"
 git checkout -b results 2>&1 | indent
 git fetch --all 2>&1 | indent
 git branch -u origin/results 2>&1 | indent
@@ -95,54 +95,6 @@ git pull --no-commit -X theirs origin master 2>&1 | indent
 # copy logs to logs directory
 echo -e "${WHITE}Updating logs/ with new logs..${NC}"
 cp -a /tmp/logs/* logs/ 2>&1 | indent
-
-# create screenshots of all new items.
-for SITE_CONFIG in ${MODIFIED_CONFIGS}
-  do
-    echo -e "${WHITE}Taking Screenshots of objects in ${SITE_CONFIG}.. ${NC}"
-    if python3 ./screenshot.py "${SITE_CONFIG}"
-      then
-        echo -e "${GREEN}Success. ${NC}"
-      else
-        echo -e "${RED}Failed, code $?. ${NC}"
-        EXIT_CODE=1
-    fi
-  done
-
-# create index of site screenshots.
-echo -e "${WHITE}Creating Screenshot index README.md${NC}"
-cd screenshots || { echo -e "${RED}Could not cd to screenshots. Exiting.${NC}"; exit 1; }
-{
-  echo "## Updated CloudGenix Topology ($(date))"
-  echo "from commit:${TRAVIS_COMMIT} "
-  echo '<img alt="Map Image" src="map.png?raw=1" width="1110">'
-  echo ''
-  echo "### All Sites (updated in this commit and previous commits):"
-  echo ""
-  echo '<ul>'
-} > README.md
-
-# iterate directories.
-for DIRECTORY in $(ls -d */ | cut -f1 -d'/')
-  do
-    echo "<li><A href=\"${DIRECTORY}/README.md\">${DIRECTORY}</A>" >> README.md
-  done
-echo '' >> README.md
-
-# return back to parent directory
-cd .. || { echo -e "${RED}Could not cd to parent directory. Exiting.${NC}"; exit 1; }
-
-
-# push logs and screenshots to results repository
-git add -A logs/* 2>&1 | indent
-git add -A screenshots/* 2>&1 | indent
-git commit -m 'Configuration Log and Screenshot Results [ci skip]' 2>&1 | indent
-git push origin results 2>&1 | indent
-
-## Debug push items
-#git log --full-history
-#git reflog
-#git remote -v
 
 if [ ${EXIT_CODE} == 0 ]
   then

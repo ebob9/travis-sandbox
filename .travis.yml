@@ -24,3 +24,5 @@ install:
 
 script:
   - bash ./deploy_changes.sh
+  - bash ./take_screenshots.sh
+  - bash ./push_results.sh
