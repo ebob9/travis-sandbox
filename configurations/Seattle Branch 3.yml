@@ -1,0 +1,854 @@
+---
+type: cloudgenix template
+version: 1.0
+# Created at 2020-02-06T07:54:58.451518Z
+# by aaron@cloudgenix.com
+sites v4.4:
+  Seattle Branch 3:
+    address:
+      city: Seattle
+      country: United States
+      post_code: '98134'
+      state: WA
+      street: 1250 1st Ave S
+      street2:
+    admin_state: active
+    description: Sales OfficeSeattle Branch 3 Seattle Branch 3 Seattle Branch 302052020
+    dhcpservers v2.1:
+    - broadcast_address: 192.168.40.255
+      custom_options:
+      default_lease_time: 43200
+      description:
+      disabled: false
+      dns_servers:
+      - 192.168.100.10
+      - 8.8.8.8
+      domain_name: justplugin.net
+      gateway: 192.168.40.1
+      ip_ranges:
+      - end_ip: 192.168.40.200
+        start_ip: 192.168.40.100
+      max_lease_time: 86400
+      network_context_id:
+      static_mappings:
+      - ip_address: 192.168.40.100
+        mac: 00:50:56:91:66:87
+        name: Branch3-Traffic-Gen
+      subnet: 192.168.40.0/24
+      tags:
+    element_cluster_role: SPOKE
+    elements v2.3:
+      SEA-ION-3K-1:
+        admin_action:
+        allowed_roles:
+        - HUB
+        - SPOKE
+        cluster_insertion_mode:
+        cluster_member_id:
+        connected: true
+        deployment_op:
+        description:
+        element_extensions v2.0:
+          Akamai CDN:
+            conf:
+              app_id: '14992953028370161'
+              app_limits:
+                init_fail_pct:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+                ntt:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+                pps:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+                rtt:
+                  enabled: true
+                  hard_limit: 350
+                  soft_limit: 275
+                txn_fail_pct:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+              path_limits:
+            disabled: false
+            entity_id: '14992953028370161'
+            namespace: thresholds/apps
+          MS-update:
+            conf:
+              app_id: '14992953013660098'
+              app_limits:
+                init_fail_pct:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+                ntt:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+                pps:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+                rtt:
+                  enabled: true
+                  hard_limit: 350
+                  soft_limit: 275
+                txn_fail_pct:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+              path_limits:
+            disabled: false
+            entity_id: '14992953013660098'
+            namespace: thresholds/apps
+          akamai-cdn-lqm-thresholds:
+            conf:
+              jitter: 0
+              jitter_en: false
+              latency: 200
+              latency_en: true
+              packet_loss: 3
+              packet_loss_en: true
+            disabled: false
+            entity_id: '14992953028370161'
+            namespace: thresholds/lqm/app
+          dnsmasq config:
+            conf:
+              config:
+              - '## ION 2000 C1 settings'
+              - '# Do not cache negitive responses.'
+              - '# no-negcache'
+              - '# Set Cache size'
+              - cache-size=10000
+              - '# Limit UDP packet size to 1280'
+              - edns-packet-max=1200
+              - '# Don''t do work for short names, require fqdn'
+              - domain-needed
+              - ''
+              - '## DNS Servers to use, @interface (required)'
+              - server=8.8.8.8@10.200.6.1
+              - server=1.1.1.1@10.200.6.1
+              - ''
+              - '## Interface(s) to listen on.'
+              - interface=cgx_interface:5.200
+              - interface=cgx_interface:5.201
+              - interface=cgx_interface:5.203
+              - interface=cgx_interface:5.204
+              - interface=cgx_interface:5.205
+              - interface=cgx_interface:5.206
+              - interface=cgx_interface:5.207
+              - ''
+              - '## Redirect specific requests out specific DNS servers'
+              - server=/columbia.csc/10.45.145.80@10.200.6.1
+              - server=/columbia.csc/10.45.145.81@10.200.6.1
+              - server=/columbia.csc/10.35.161.180@10.200.6.1
+              - server=/columbia.csc/10.35.161.181@10.200.6.1
+              - server=/columbia.com/10.45.145.80@10.200.6.1
+              - server=/columbia.com/10.45.145.81@10.200.6.1
+              - server=/columbia.com/10.35.161.180@10.200.6.1
+              - server=/columbia.com/10.35.161.181@10.200.6.1
+              - ''
+              - rev-server=10.0.0.0/8,10.45.145.80@10.200.6.1
+              - rev-server=10.0.0.0/8,10.45.145.81@10.200.6.1
+              - rev-server=10.0.0.0/8,10.35.161.180@10.200.6.1
+              - rev-server=10.0.0.0/8,10.35.161.181@10.200.6.1
+              - ''
+              - '# For Debugging ONLY, uncomment this line to log queries.'
+              - '# ALSO will need to set log level to "debug" for "local1" on ION
+                via CLI/Toolkit with'
+              - '# ''debug logging facility=local1 level=debug`'
+              - log-queries
+              - ''
+              - '# Same as previous, but show LOTS MORE info.'
+              - '#log-queries=extra'
+            disabled: false
+            entity_id: '1'
+            namespace: dnsmasq/prod
+          fc config:
+            conf:
+              sub_optimal_flow_list_reval: true
+            disabled: false
+            entity_id: '8844'
+            namespace: fcconfig
+          microsoft-update-lqm-thresholds:
+            conf:
+              jitter: 0
+              jitter_en: false
+              latency: 100
+              latency_en: true
+              packet_loss: 3
+              packet_loss_en: true
+            disabled: false
+            entity_id: '14992953013660098'
+            namespace: thresholds/lqm/app
+          netflow:
+            conf:
+              collectors:
+              - ip: 192.168.100.200
+                lan_snmp_id: 4
+                port: 2055
+                wan_snmp_id: 3
+            disabled: false
+            entity_id: controller 1
+            namespace: netflowv5/interface
+        element_security_zones v2.0: []
+        interfaces v4.7:
+          '1':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description: Port 1 - MegaPath Internet
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+              type: dhcp
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id: internet
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            - SEA-MegaPath-INT1
+            sub_interface:
+            tags:
+            type: port
+            used_for: public
+          '2.40':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+                address: 192.168.40.1/24
+              type: static
+            mac_address:
+            mtu: 0
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent: '2'
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+              native_vlan: false
+              vlan_id: 40
+            tags:
+            type: subinterface
+            used_for: lan
+          '2.41':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+                address: 192.168.41.1/24
+              type: static
+            mac_address:
+            mtu: 0
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id: '14994864016700249'
+            parent: '2'
+            pppoe_config:
+            scope: global
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+              native_vlan: false
+              vlan_id: 41
+            tags:
+            type: subinterface
+            used_for: lan
+          '3':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '4':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description: Port 4 - Comcast Internet
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+              type: dhcp
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id: internet
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            - SEA-Comcast-INT2
+            sub_interface:
+            tags:
+            type: port
+            used_for: public
+          '5':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '6':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '7':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '8':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '9':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          controller 1:
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description: '     #serial:42119d73-589b-b1f4-19a7-23643cf1bb18'
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+                name_servers:
+                - 8.8.8.8
+              routes:
+              - destination: 0.0.0.0/0
+                via: 192.168.40.1
+              static_config:
+                address: 192.168.40.10/24
+              type: static
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          sl-zscaler-14994857989790158:
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description: Created by ZScaler Integration App
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+                address: 192.168.237.1/30
+              type: static
+            mac_address:
+            mtu: 1400
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent: '1'
+            pppoe_config:
+            scope: local
+            service_link_config:
+              ipsec_config:
+                authentication:
+                  certificate:
+                  ikev1_params:
+                  local_ca_certificate:
+                  local_id: custom
+                  local_id_custom: 15682085479270198_1092@demo-cloudgenix.com
+                  passphrase:
+                  private_key:
+                  remote_ca_certificate:
+                  remote_id:
+                  secret:
+                  type: psk
+                ipsec_profile_id: ZSCALER_IKEV1
+              peer:
+              service_endpoint_id: US-West-Zscaler
+              type: ipsec
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            - Zscaler-integrator-managed
+            type: service_link
+            used_for: none
+          sl-zscaler-14994857989810160:
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description: Created by ZScaler Integration App
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+                address: 192.168.237.5/30
+              type: static
+            mac_address:
+            mtu: 1400
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent: '4'
+            pppoe_config:
+            scope: local
+            service_link_config:
+              ipsec_config:
+                authentication:
+                  certificate:
+                  ikev1_params:
+                  local_ca_certificate:
+                  local_id: custom
+                  local_id_custom: 15682085487870075_1092@demo-cloudgenix.com
+                  passphrase:
+                  private_key:
+                  remote_ca_certificate:
+                  remote_id:
+                  secret:
+                  type: psk
+                ipsec_profile_id: ZSCALER_IKEV1
+              peer:
+              service_endpoint_id: ZScaler
+              type: ipsec
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            - Zscaler-integrator-managed
+            type: service_link
+            used_for: none
+        l3_direct_private_wan_forwarding: true
+        l3_lan_forwarding: true
+        model_name: ion 3102v
+        nat_policysetstack_id:
+        network_policysetstack_id:
+        ntp v2.0:
+        - description: Default NTP template created by super user.
+          name: default
+          ntp_servers:
+          - host: 0.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 1.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 2.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 3.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: time.nist.gov
+            max_poll: 15
+            min_poll: 13
+            version: 4
+          source_interface_ids:
+          tags:
+        priority_policysetstack_id:
+        role: SPOKE
+        routing:
+          as_path_access_lists v2.0:
+            AS_P1:
+              as_path_regex_list:
+              - as_path_regex: ^661
+                order: 1
+                permit: true
+              auto_generated: false
+              description:
+              tags:
+          bgp:
+            global_config v2.1:
+              admin_distance: 20
+              adv_interval: 1
+              graceful_restart: false
+              hold_time: 90
+              keepalive_time: 30
+              local_as_num: '64086.59904'
+              maximum_paths: 1
+              md5_secret:
+              multi_hop_limit: 1
+              peer_retry_time: 120
+              prefix_adv_type: unaggregated
+              prefix_adv_type_to_lan: default
+              prefixes_to_adv_to_wan:
+              router_id:
+              stalepath_time: 120
+          ip_community_lists v2.0:
+            '1':
+              auto_generated: false
+              community_list:
+              - community_str: no-advertise
+                permit: true
+              description:
+              tags:
+          prefix_lists v2.0:
+            PL_1:
+              auto_generated: false
+              description:
+              prefix_filter_list:
+              - ge: 0
+                le: 0
+                order: 1
+                permit: false
+                prefix: 192.168.0.0/16
+              tags:
+          route_maps v2.0:
+            RM_1:
+              auto_generated: false
+              description:
+              route_map_entries:
+              - continue_entry:
+                match:
+                  as_path_id: AS_P1
+                  community_list_id:
+                  ip_next_hop_id:
+                  ip_prefix_list_id:
+                  tag: 0
+                order: 10
+                permit: true
+                set:
+                  as_path_prepend: '6666'
+                  community:
+                  ip_next_hop:
+                  local_preference: 0
+                  tag: 0
+                  weight: 0
+              tags:
+          static v2.0: []
+        serial_number: 42119d73-589b-b1f4-19a7-23643cf1bb18
+        snmp:
+          agent v2.0:
+          - description:
+            tags:
+            v2_config:
+              community: public
+              enabled: true
+            v3_config:
+        software_version: 5.1.9-b10
+        spoke_ha_config:
+        state: bound
+        tags:
+        tenant_id: '1092'
+        toolkit v2.2:
+          account_disable_interval: 5
+          inactive_interval: 15
+          otpkey_version: 1
+          retry_login_count: 5
+          ssh_enabled: true
+          ssh_outbound_enabled: false
+        vpn_to_vpn_forwarding: false
+    lannetworks v3.1:
+      default_seattle-branch-3_325225249:
+        description:
+        ipv4_config:
+          default_routers:
+          - 192.168.40.1/24
+          dhcp_relay:
+          dhcp_server:
+          prefixes:
+        network_context_id:
+        scope: global
+        tags:
+      default_seattle-branch-3_340232745:
+        description:
+        ipv4_config:
+          default_routers:
+          - 192.168.41.1/24
+          dhcp_relay:
+          dhcp_server:
+          prefixes:
+        network_context_id: Guest
+        scope: global
+        tags:
+    location:
+      description:
+      latitude: 47.590816497802734
+      longitude: -122.33419799804688
+    nat_policysetstack_id: Default-NATPolicySetStack
+    network_policysetstack_id: Simple_Demo (Simple)
+    policy_set_id:
+    priority_policysetstack_id: Simple_QoS (Simple)
+    security_policyset_id:
+    service_binding: West Coast Branches
+    site_security_zones v2.0:
+    - networks:
+      - network_id: zbfw_overlay
+        network_type: wan_overlay
+      zone_id: Corp-WAN
+    - networks:
+      - network_id: default_seattle-branch-3_325225249
+        network_type: lan_network
+      zone_id: Corp-LAN
+    - networks:
+      - network_id: SEA-MegaPath-INT1
+        network_type: wan_network
+      - network_id: SEA-Comcast-INT2
+        network_type: wan_network
+      zone_id: Outside
+    - networks:
+      - network_id: default_seattle-branch-3_340232745
+        network_type: lan_network
+      zone_id: Guest
+    tags:
+    - AUTO-zscaler
+    waninterfaces v2.4:
+      SEA-Comcast-INT2:
+        bfd_mode: aggressive
+        bw_config_mode: manual
+        bwc_enabled: true
+        cost: 128
+        description: really 1
+        label_id: Internet Cable
+        link_bw_down: 50.0
+        link_bw_up: 50.0
+        lqm_config:
+        lqm_enabled: true
+        network_id: Comcast Internet
+        network_type: publicwan
+        tags:
+      SEA-MegaPath-INT1:
+        bfd_mode: aggressive
+        bw_config_mode: manual
+        bwc_enabled: true
+        cost: 200
+        description:
+        label_id: Internet DSL
+        link_bw_down: 50.0
+        link_bw_up: 50.0
+        lqm_config:
+        lqm_enabled: true
+        network_id: Megapath
+        network_type: publicwan
+        tags:

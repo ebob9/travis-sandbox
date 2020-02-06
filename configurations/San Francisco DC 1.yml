@@ -1,0 +1,1197 @@
+---
+type: cloudgenix template
+version: 1.0
+# Created at 2020-02-06T07:54:57.521757Z
+# by aaron@cloudgenix.com
+sites v4.4:
+  San Francisco DC 1:
+    address:
+      city: San Francisco
+      country: United States
+      post_code: '94107'
+      state: CA
+      street: 24 Willie Mays Plz
+      street2:
+    admin_state: active
+    description: San Francisco DC 1 San Francisco DC 1 San Francisco DC 102052020
+    element_cluster_role: HUB
+    elements v2.3:
+      SFO-7K-1:
+        admin_action:
+        allowed_roles:
+        - HUB
+        - SPOKE
+        cluster_insertion_mode: auto
+        cluster_member_id:
+        connected: true
+        deployment_op:
+        description:
+        element_extensions v2.0:
+          Salesforce app thresholds:
+            conf:
+              app_id: '14992953009590222'
+              app_limits:
+                init_fail_pct:
+                  enabled: true
+                  hard_limit: 20
+                  soft_limit: 5
+                ntt:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+                pps:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+                rtt:
+                  enabled: true
+                  hard_limit: 2000
+                  soft_limit: 300
+                txn_fail_pct:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+              path_limits:
+            disabled: false
+            entity_id: '14992953009590222'
+            namespace: thresholds/apps
+          netflow:
+            conf:
+              collectors:
+              - ip: 192.168.100.200
+                lan_snmp_id: 3
+                port: 2055
+                wan_snmp_id: 4
+            disabled: false
+            entity_id: controller 1
+            namespace: netflowv5/interface
+        element_security_zones v2.0: []
+        interfaces v4.7:
+          '1':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              - destination: 0.0.0.0/0
+                via: 192.168.101.2
+              static_config:
+                address: 192.168.101.3/28
+              type: static
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            - SF-DC-MPLS
+            sub_interface:
+            tags:
+            type: port
+            used_for: private
+          '2':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+                name_servers:
+                - 8.8.8.8
+              routes:
+              - destination: 0.0.0.0/0
+                via: 192.168.102.1
+              static_config:
+                address: 192.168.102.3/28
+              type: static
+            mac_address:
+            mtu: 1500
+            nat_address: 200.1.0.1
+            nat_pools:
+            nat_port: 4500
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            - SF-DC-INT
+            sub_interface:
+            tags:
+            type: port
+            used_for: public
+          '3':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '4':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '5':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '6':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '7':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '8':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '9':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          controller 1:
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description: '     #serial:42113ec5-795a-5426-f861-748cfefb6821'
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+                name_servers:
+                - 8.8.8.8
+              routes:
+              - destination: 0.0.0.0/0
+                via: 192.168.100.1
+              static_config:
+                address: 192.168.100.3/24
+              type: static
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+        l3_direct_private_wan_forwarding: false
+        l3_lan_forwarding: false
+        model_name: ion 7108v
+        nat_policysetstack_id:
+        network_policysetstack_id:
+        ntp v2.0:
+        - description: Default NTP template created by super user.
+          name: default
+          ntp_servers:
+          - host: 0.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 1.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 2.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 3.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: time.nist.gov
+            max_poll: 15
+            min_poll: 13
+            version: 4
+          source_interface_ids:
+          tags:
+        priority_policysetstack_id:
+        role: HUB
+        routing:
+          as_path_access_lists v2.0:
+            auto-core-15315496187260181-as-path-out:
+              as_path_regex_list:
+              - as_path_regex: .*
+                order: 1
+                permit: true
+              auto_generated: true
+              description:
+              tags:
+          bgp:
+            global_config v2.1:
+              admin_distance: 20
+              adv_interval: 1
+              graceful_restart: false
+              hold_time: 90
+              keepalive_time: 30
+              local_as_num: '1000'
+              maximum_paths: 1
+              md5_secret:
+              multi_hop_limit: 1
+              peer_retry_time: 120
+              prefix_adv_type:
+              prefix_adv_type_to_lan: default
+              prefixes_to_adv_to_wan:
+              router_id:
+              stalepath_time: 120
+            peers v2.1:
+              Core peer - 192.168.101.2:
+                bgp_config:
+                  adv_interval: 1
+                  hold_time: 90
+                  keepalive_time: 30
+                  local_as_num:
+                  md5_secret:
+                  multi_hop_limit: 1
+                  peer_retry_time: 120
+                description:
+                peer_ip: 192.168.101.2
+                peer_type: core
+                remote_as_num: '101'
+                route_map_in_id: auto-core-15315496187260181-route-map-in
+                route_map_out_id: auto-core-15315496187260181-route-map-out
+                scope: local
+                shutdown: false
+                tags:
+                update_source:
+          prefix_lists v2.0:
+            auto-prefix-adv-and-distribute:
+              auto_generated: true
+              description:
+              prefix_filter_list:
+              tags:
+            auto-prefix-adv-no-distribute:
+              auto_generated: true
+              description:
+              prefix_filter_list:
+              tags:
+          route_maps v2.0:
+            auto-core-15315496187260181-route-map-in:
+              auto_generated: true
+              description: Autogenerated core-15315496187260181 route-map IN
+              route_map_entries:
+              - continue_entry:
+                match:
+                order: 10
+                permit: true
+                set:
+                  as_path_prepend:
+                  community:
+                  ip_next_hop:
+                  local_preference: 100
+                  tag: 0
+                  weight: 0
+              tags:
+            auto-core-15315496187260181-route-map-out:
+              auto_generated: true
+              description: Autogenerated core-15315496187260181 route-map OUT
+              route_map_entries:
+              - continue_entry:
+                match:
+                  as_path_id: auto-core-15315496187260181-as-path-out
+                  community_list_id:
+                  ip_next_hop_id:
+                  ip_prefix_list_id: auto-prefix-adv-and-distribute
+                  tag: 0
+                order: 99
+                permit: true
+                set:
+                  as_path_prepend: 1000,1000,1000,1000
+                  community:
+                  ip_next_hop:
+                  local_preference: 0
+                  tag: 0
+                  weight: 0
+              - continue_entry:
+                match:
+                  as_path_id: auto-core-15315496187260181-as-path-out
+                  community_list_id:
+                  ip_next_hop_id:
+                  ip_prefix_list_id: auto-prefix-adv-no-distribute
+                  tag: 0
+                order: 100
+                permit: true
+                set:
+                  as_path_prepend: 1000,1000,1000,1000
+                  community: no-advertise
+                  ip_next_hop:
+                  local_preference: 0
+                  tag: 0
+                  weight: 0
+              tags:
+          static v2.0:
+          - description:
+            destination_prefix: 0.0.0.0/0
+            network_context_id:
+            nexthops:
+            - admin_distance: 1
+              nexthop_interface_id:
+              nexthop_ip: 192.168.101.2
+              self: false
+            scope: local
+            tags:
+        serial_number: 42113ec5-795a-5426-f861-748cfefb6821
+        snmp:
+          agent v2.0:
+          - description:
+            tags:
+            v2_config:
+              community: public
+              enabled: true
+            v3_config:
+        software_version: 5.1.9-b10
+        spoke_ha_config:
+        state: bound
+        tags:
+        tenant_id: '1092'
+        toolkit v2.2:
+          account_disable_interval: 5
+          inactive_interval: 15
+          otpkey_version: 1
+          retry_login_count: 5
+          ssh_enabled: true
+          ssh_outbound_enabled: false
+        vpn_to_vpn_forwarding: true
+      SFO-7K-2:
+        admin_action:
+        allowed_roles:
+        - HUB
+        - SPOKE
+        cluster_insertion_mode: auto
+        cluster_member_id:
+        connected: true
+        deployment_op:
+        description:
+        element_extensions v2.0:
+          Salesforce app thresholds:
+            conf:
+              app_id: '14992953009590222'
+              app_limits:
+                init_fail_pct:
+                  enabled: true
+                  hard_limit: 20
+                  soft_limit: 5
+                ntt:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+                pps:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+                rtt:
+                  enabled: true
+                  hard_limit: 2000
+                  soft_limit: 300
+                txn_fail_pct:
+                  enabled: false
+                  hard_limit: 0
+                  soft_limit: 0
+              path_limits:
+            disabled: false
+            entity_id: '14992953009590222'
+            namespace: thresholds/apps
+          netflow:
+            conf:
+              collectors:
+              - ip: 192.168.100.200
+                lan_snmp_id: 3
+                port: 2055
+                wan_snmp_id: 4
+            disabled: false
+            entity_id: controller 1
+            namespace: netflowv5/interface
+        element_security_zones v2.0: []
+        interfaces v4.7:
+          '1':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              - destination: 0.0.0.0/0
+                via: 192.168.101.2
+              static_config:
+                address: 192.168.101.4/28
+              type: static
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            - SF-DC-MPLS
+            sub_interface:
+            tags:
+            type: port
+            used_for: private
+          '2':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+                name_servers:
+                - 8.8.8.8
+              routes:
+              - destination: 0.0.0.0/0
+                via: 192.168.102.1
+              static_config:
+                address: 192.168.102.4/28
+              type: static
+            mac_address:
+            mtu: 1500
+            nat_address: 200.1.0.1
+            nat_pools:
+            nat_port: 4501
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            - SF-DC-INT
+            sub_interface:
+            tags:
+            type: port
+            used_for: public
+          '3':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '4':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '5':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '6':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '7':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '8':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          '9':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description:
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          controller 1:
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            description: '     #serial:421166cf-b7f9-8149-9385-7824cbbba8fd'
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+                name_servers:
+                - 8.8.8.8
+              routes:
+              - destination: 0.0.0.0/0
+                via: 192.168.100.1
+              static_config:
+                address: 192.168.100.4/24
+              type: static
+            mac_address:
+            mtu: 1500
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            service_link_config:
+            site_wan_interface_ids:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+        l3_direct_private_wan_forwarding: false
+        l3_lan_forwarding: false
+        model_name: ion 7108v
+        nat_policysetstack_id:
+        network_policysetstack_id:
+        ntp v2.0:
+        - description: Default NTP template created by super user.
+          name: default
+          ntp_servers:
+          - host: 0.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 1.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 2.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 3.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: time.nist.gov
+            max_poll: 15
+            min_poll: 13
+            version: 4
+          source_interface_ids:
+          tags:
+        priority_policysetstack_id:
+        role: HUB
+        routing:
+          as_path_access_lists v2.0:
+            auto-core-15315496187360184-as-path-out:
+              as_path_regex_list:
+              - as_path_regex: .*
+                order: 1
+                permit: true
+              auto_generated: true
+              description:
+              tags:
+          bgp:
+            global_config v2.1:
+              admin_distance: 20
+              adv_interval: 1
+              graceful_restart: false
+              hold_time: 90
+              keepalive_time: 30
+              local_as_num: '1000'
+              maximum_paths: 1
+              md5_secret:
+              multi_hop_limit: 1
+              peer_retry_time: 120
+              prefix_adv_type:
+              prefix_adv_type_to_lan: default
+              prefixes_to_adv_to_wan:
+              router_id:
+              stalepath_time: 120
+            peers v2.1:
+              Core peer - 192.168.101.2:
+                bgp_config:
+                  adv_interval: 1
+                  hold_time: 90
+                  keepalive_time: 30
+                  local_as_num:
+                  md5_secret:
+                  multi_hop_limit: 1
+                  peer_retry_time: 120
+                description:
+                peer_ip: 192.168.101.2
+                peer_type: core
+                remote_as_num: '101'
+                route_map_in_id: auto-core-15315496187360184-route-map-in
+                route_map_out_id: auto-core-15315496187360184-route-map-out
+                scope: local
+                shutdown: false
+                tags:
+                update_source:
+          prefix_lists v2.0:
+            auto-prefix-adv-and-distribute:
+              auto_generated: true
+              description:
+              prefix_filter_list:
+              tags:
+            auto-prefix-adv-no-distribute:
+              auto_generated: true
+              description:
+              prefix_filter_list:
+              tags:
+          route_maps v2.0:
+            auto-core-15315496187360184-route-map-in:
+              auto_generated: true
+              description: Autogenerated core-15315496187360184 route-map IN
+              route_map_entries:
+              - continue_entry:
+                match:
+                order: 10
+                permit: true
+                set:
+                  as_path_prepend:
+                  community:
+                  ip_next_hop:
+                  local_preference: 100
+                  tag: 0
+                  weight: 0
+              tags:
+            auto-core-15315496187360184-route-map-out:
+              auto_generated: true
+              description: Autogenerated core-15315496187360184 route-map OUT
+              route_map_entries:
+              - continue_entry:
+                match:
+                  as_path_id: auto-core-15315496187360184-as-path-out
+                  community_list_id:
+                  ip_next_hop_id:
+                  ip_prefix_list_id: auto-prefix-adv-and-distribute
+                  tag: 0
+                order: 99
+                permit: true
+                set:
+                  as_path_prepend: 1000,1000,1000,1000
+                  community:
+                  ip_next_hop:
+                  local_preference: 0
+                  tag: 0
+                  weight: 0
+              - continue_entry:
+                match:
+                  as_path_id: auto-core-15315496187360184-as-path-out
+                  community_list_id:
+                  ip_next_hop_id:
+                  ip_prefix_list_id: auto-prefix-adv-no-distribute
+                  tag: 0
+                order: 100
+                permit: true
+                set:
+                  as_path_prepend: 1000,1000,1000,1000
+                  community: no-advertise
+                  ip_next_hop:
+                  local_preference: 0
+                  tag: 0
+                  weight: 0
+              tags:
+          static v2.0:
+          - description:
+            destination_prefix: 0.0.0.0/0
+            network_context_id:
+            nexthops:
+            - admin_distance: 1
+              nexthop_interface_id:
+              nexthop_ip: 192.168.101.2
+              self: false
+            scope: local
+            tags:
+        serial_number: 421166cf-b7f9-8149-9385-7824cbbba8fd
+        snmp:
+          agent v2.0:
+          - description:
+            tags:
+            v2_config:
+              community: public
+              enabled: true
+            v3_config:
+        software_version: 5.1.9-b10
+        spoke_ha_config:
+        state: bound
+        tags:
+        tenant_id: '1092'
+        toolkit v2.2:
+          account_disable_interval: 5
+          inactive_interval: 15
+          otpkey_version: 1
+          retry_login_count: 5
+          ssh_enabled: true
+          ssh_outbound_enabled: false
+        vpn_to_vpn_forwarding: true
+    hubclusters v2.0:
+      default-1092-14994523796210163:
+        admin_up: true
+        load_alarm_threshold: 90
+        subscription_factor: 0.5
+    lannetworks v3.1:
+      default_san-francisco-d-c-1_154589013:
+        description:
+        ipv4_config:
+          default_routers:
+          dhcp_relay:
+          dhcp_server:
+          prefixes:
+          - 192.168.104.0/24
+        network_context_id:
+        scope: global
+        tags:
+      default_san-francisco_319324642:
+        description:
+        ipv4_config:
+          default_routers:
+          dhcp_relay:
+          dhcp_server:
+          prefixes:
+          - 192.168.102.0/24
+        network_context_id:
+        scope: global
+        tags:
+      default_san-francisco_359921122:
+        description:
+        ipv4_config:
+          default_routers:
+          dhcp_relay:
+          dhcp_server:
+          prefixes:
+          - 192.168.100.0/24
+        network_context_id:
+        scope: global
+        tags:
+      default_san-francisco_482707077:
+        description:
+        ipv4_config:
+          default_routers:
+          dhcp_relay:
+          dhcp_server:
+          prefixes:
+          - 192.168.101.0/24
+        network_context_id:
+        scope: global
+        tags:
+      default_san-francisco_984352682:
+        description:
+        ipv4_config:
+          default_routers:
+          dhcp_relay:
+          dhcp_server:
+          prefixes:
+          - 192.168.103.0/24
+        network_context_id:
+        scope: global
+        tags:
+    location:
+      description:
+      latitude: 37.77889633178711
+      longitude: -122.3893814086914
+    nat_policysetstack_id:
+    network_policysetstack_id:
+    policy_set_id:
+    priority_policysetstack_id:
+    security_policyset_id:
+    service_binding:
+    tags:
+    waninterfaces v2.4:
+      SF-DC-INT:
+        bfd_mode: aggressive
+        bw_config_mode: manual
+        bwc_enabled: true
+        cost: 128
+        description:
+        label_id: Ethernet Internet
+        link_bw_down: 100.0
+        link_bw_up: 100.0
+        lqm_config:
+        lqm_enabled: true
+        network_id: Clearwire
+        network_type: publicwan
+        tags:
+      SF-DC-MPLS:
+        bfd_mode: aggressive
+        bw_config_mode: manual
+        bwc_enabled: true
+        cost: 128
+        description:
+        label_id: MPLS
+        link_bw_down: 45.0
+        link_bw_up: 45.0
+        lqm_config:
+        lqm_enabled: true
+        network_id: Verizon-MPLS
+        network_type: privatewan
+        tags:
