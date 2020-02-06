@@ -29,8 +29,17 @@ indent() { sed 's/^/    /'; }
 # Debug script (if needed)
 #set -x
 
+# temp check for parallel
+command -v parallel
+
+# temp look for file
+ls -al .tmp_modified_configs.txt
+cat .tmp_modified_configs.txt
+
 # load MODIFIED_CONFIGS from previous script.
 MODIFIED_CONFIGS=$(cat .tmp_modified_configs.txt)
+echo -e "${WHITE}Configuration Files Added or Modified:${NC}"
+echo "${MODIFIED_CONFIGS}" 2>&1 | indent
 
 # create screenshots of all new items.
 for SITE_CONFIG in ${MODIFIED_CONFIGS}
