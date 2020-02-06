@@ -109,6 +109,28 @@ for SITE_CONFIG in ${MODIFIED_CONFIGS}
     fi
   done
 
+# create index of site screenshots.
+echo -e "${WHITE}Creating Screenshot index README.md${NC}"
+cd screenshots || { echo -e "${RED}Could not cd to screenshots. Exiting.${NC}"; exit 1; }
+{
+  echo "## Updated CloudGenix Topology from commit ${TRAVIS_COMMIT}:"
+  echo '<img alt="Map Image" src="map.png" width="1110">'
+  echo ''
+  echo "### Updated Sites in commit ${TRAVIS_COMMIT}:"
+  echo '<ul>'
+} > README.md
+
+# iterate directories.
+for DIRECTORY in $(ls -d */ | cut -f1 -d'/')
+  do
+    {
+     echo '<li>'
+     echo "<A href=\"${DIRECTORY}/README.md\">${DIRECTORY}</A>"
+     echo '<\li>'
+    } >> README.md
+  done
+echo '<\ul>' >> README.md
+
 # push logs and screenshots to results repository
 git add -A logs/* 2>&1 | indent
 git add -A screenshots/* 2>&1 | indent

@@ -51,7 +51,7 @@ if "AUTH_TOKEN" in os.environ:
     CLOUDGENIX_AUTH_TOKEN = os.environ.get('AUTH_TOKEN')
 else:
     # no AUTH_TOKEN
-    ci_print("ERROR: No AUTH_TOKEN available for screenshots. Exiting.")
+    ci_print("ERROR: No AUTH_TOKEN available for screenshots. Exiting.", color="red")
     sys.exit(1)
 
 # Globals
@@ -136,8 +136,10 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
                 pass
 
     except TimeoutException:
-        ci_print("WARNING: Loading Page {0}, waiting for {1} '{2}' took longer than {3} seconds. Saving data that exists."
-              "".format(page_uri, waitfor, waitfor_value, load_wait))
+        ci_print("WARNING: Loading Page {0}, waiting for {1} '{2}' took longer than {3} seconds. "
+                 "Saving data that exists."
+                 "".format(page_uri, waitfor, waitfor_value, load_wait),
+                 color="yellow")
 
     if click_xpath is not None:
         # need to click on something quickly.
@@ -153,9 +155,9 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
 
 # quick check we have 1 argument.
 if len(sys.argv) != 2:
-    ci_print("ERROR: This script takes exactly 1 command line argument. Got the following: ")
+    ci_print("ERROR: This script takes exactly 1 command line argument. Got the following: ", color="red")
     for arg in sys.argv:
-        ci_print(arg)
+        ci_print(arg, color="red")
     sys.exit(1)
 
 # just one argument, it hopefully is the config file.
@@ -166,7 +168,7 @@ try:
     with open(config_file, 'r') as datafile:
         loaded_config = yaml.safe_load(datafile)
 except IOError as e:
-    ci_print("ERROR: Could not open file {0}: {1}".format(config_file, e))
+    ci_print("ERROR: Could not open file {0}: {1}".format(config_file, e), color="red")
     sys.exit(1)
 
 # let user know it worked.
@@ -178,7 +180,6 @@ sdk.interactive.use_token(CLOUDGENIX_AUTH_TOKEN)
 region = sdk.controller_region
 sites_n2id = sdk.build_lookup_dict(sdk.extract_items(sdk.get.sites()))
 elements_n2id = sdk.build_lookup_dict(sdk.extract_items(sdk.get.elements()))
-
 
 sites_dict = {}
 config_sites, sites_api_version = config_lower_version_get(loaded_config, "sites", sdk.get.sites)
@@ -224,23 +225,30 @@ screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='leaflet-m
                 click_xpath=XPATH_CLOSE_WHATS_NEW, load_tweak_delay=8)
 ci_print("Done", color="green")
 
+# Prep to generate markdown indexes
+markdown_index = []
 
 # start getting sites, elements, interfaces
 for site_name, elements_list in sites_dict.items():
     site_id = sites_n2id.get(site_name)
     if site_id is None:
         # something wrong with this site. Print and continue.
-        ci_print("WARNING: Could not get Site ID for Site {0}, skipping..".format(site_name))
+        ci_print("WARNING: Could not get Site ID for Site {0}, skipping..".format(site_name), color="yellow")
         continue
-    site_filesafer_name = sanitize_filename(site_name)
-    site_directory = "screenshots/{0}/".format(site_filesafer_name)
+    site_fs_name = sanitize_filename(site_name)
+    site_directory = "screenshots/{0}/".format(site_fs_name)
     # make a directory
     pathlib.Path(site_directory).mkdir(parents=True, exist_ok=True)
+    markdown_site_info = {
+        "name": site_name,
+        "fs_name": site_fs_name,
+        "elements": []
+    }
 
     # Get SITE page
     ci_print("    Taking Screenshot of Site '{0}' Site Map Card: ".format(site_name), end="")
     uri = UI_SITE_PAGE.format(region, site_id)
-    filename = site_directory + "{0}.site-info.png".format(site_name)
+    filename = site_directory + "site-info.png"
     screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='site-info')
     ci_print("Done", color="green")
 
@@ -248,11 +256,18 @@ for site_name, elements_list in sites_dict.items():
         element_id = elements_n2id.get(element_name)
         if element_id is None:
             # something wrong with this element. Print and continue.
-            ci_print("WARNING: Could not get Element ID for Element {0}, skipping..".format(element_name))
+            ci_print("WARNING: Could not get Element ID for Element {0}, skipping..".format(element_name),
+                     color="yellow")
             continue
-        element_filesafer_name = sanitize_filename(element_name)
-        element_directory = site_directory + "{0}/".format(element_filesafer_name)
+        element_fs_name = sanitize_filename(element_name)
+        element_directory = site_directory + "{0}/".format(element_fs_name)
         pathlib.Path(element_directory).mkdir(parents=True, exist_ok=True)
+        markdown_element_info = {
+            "name": element_name,
+            "fs_name": element_fs_name,
+            "interfaces": []
+        }
+
         # Get ELEMENT pages.
         # Note, static/bgp pages can get stuck, if we navigate to any other page after, it works fine.
 
@@ -358,17 +373,140 @@ for site_name, elements_list in sites_dict.items():
             for interface_record in interfaces_cache:
                 interface_id = interface_record.get('id')
                 interface_name = interface_record.get('name')
-                interface_filesafer_name = sanitize_filename(interface_name)
+                interface_fs_name = sanitize_filename(interface_name)
+
+                markdown_interface_info = {
+                    "name": interface_name,
+                    "fs_name": interface_fs_name
+                }
 
                 # interface get!
                 ci_print("        Taking Screenshot of Interface '{0}' Configuration: ".format(interface_name), end="")
                 uri = UI_INTERFACES_DETAIL.format(region, element_id, interface_id)
-                filename = interface_directory + "{0}.png".format(interface_filesafer_name)
+                filename = interface_directory + "{0}.png".format(interface_fs_name)
                 screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='port_config_form_nav',
                                 click_xpath=XPATH_INTERFACE_ADVANCED_OPTIONS)
                 ci_print("Done", color="green")
 
+                # save markdown info
+                markdown_element_info["interfaces"].append(markdown_interface_info)
+
             # Set window size back..
             driver.set_window_size(1920, 1080)
 
+        # save element markdown info
+        markdown_site_info["elements"].append(markdown_element_info)
+
+    # save site markdown info
+    markdown_index.append(markdown_site_info)
+
+# close the web page rendering engine
 driver.close()
+
+ci_print("    Creating changed item Markdown Indexes..", color="white")
+# prep to generate markdown indexes.
+for site in markdown_index:
+    site_readme_filename = f"screenshots/{site['fs_name']}/README.md"
+    site_readme_md = f"""\
+## Site: {site['name']}
+[Back To Topology](../README.md)
+<img alt="Site Card" src="site-info.png" width="1110">
+
+### Elements
+<ul>
+"""
+
+    for element in site['elements']:
+        element_readme_filename = f"screenshots/{site['fs_name']}/{element['fs_name']}/README.md"
+        element_readme_md = f"""\
+## Element: {element['name']}
+[Back To Site](../README.md)
+
+### Interfaces
+<ul>
+<li>
+<A href="interfaces/README.md">Interfaces Detail</A>
+</li>
+</ul>
+<img alt="Interfaces Summary" src="interfaces_summary.png" width="1110">
+
+### Basic Info
+<img alt="Basic Info" src="basic_info.png" width="1110">
+
+### Device Toolkit
+<img alt="Device Toolkit" src="device_toolkit.png" width="1110">
+
+### Routing/BGP Peers
+<img alt="BGP Peers" src="bgp_peers.png" width="1110">
+
+### Routing/BGP Route Maps
+<img alt="BGP Route Maps" src="bgp_route_maps.png" width="1110">
+
+### Routing/BGP AS-Path Access Lists
+<img alt="BGP Peers" src="bgp_aspath_acl.png" width="1110">
+
+### Routing/BGP Prefix Lists
+<img alt="BGP Peers" src="bgp_prefix_lists.png" width="1110">
+
+### Routing/BGP Peers
+<img alt="BGP Peers" src="bgp_ip_community_lists.png" width="1110">
+
+### Routing/Static
+<img alt="Static Routes" src="static_routes.png" width="1110">
+
+### SNMP
+<img alt="SNMP" src="snmp.png" width="1110">
+
+### SYSLOG
+<img alt="SYSLOG" src="syslog.png" width="1110">
+
+### NTP
+<img alt="NTP" src="ntp.png" width="1110">
+
+"""
+
+        interface_readme_filename = f"screenshots/{site['fs_name']}/{element['fs_name']}/interfaces/README.md"
+        # interface readme header
+        interface_readme_md = f"""\
+## Element: {element['name']} Interfaces
+[Back To Element](../README.md)
+
+"""
+
+        # iterate interfaces
+        for interface in element['interfaces']:
+            # add individual interface info
+            interface_readme_md += f"""\
+### {interface['name']}
+<img alt="1" src="{interface['fs_name']}.png" width="1110">
+                
+"""
+
+        # done with interfaces, write interface readme
+        ci_print(f"      Writing {interface_readme_filename}: ", end="")
+        with open(interface_readme_filename, 'w') as interface_readme_fd:
+            interface_readme_fd.write(interface_readme_md)
+        ci_print("Done", color="green")
+
+        # also done with elements, as not any dynamic items
+        ci_print(f"      Writing {element_readme_filename}: ", end="")
+        with open(element_readme_filename, 'w') as element_readme_fd:
+            element_readme_fd.write(element_readme_md)
+        ci_print("Done", color="green")
+
+        # update site readme MD with element info.
+        site_readme_md += f"""\
+<li>
+<A href="f{element['fs_name']}/README.md">{element['name']}</A>
+</li>
+"""
+
+    # finish site readme md
+    site_readme_md += """/
+</ul>
+"""
+
+    ci_print(f"      Writing {site_readme_filename}: ", end="")
+    with open(site_readme_filename, 'w') as site_readme_fd:
+        site_readme_fd.write(site_readme_md)
+    ci_print("Done", color="green")

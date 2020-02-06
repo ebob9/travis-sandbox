@@ -1,19 +1,19 @@
 ---
 type: cloudgenix template
 version: 1.0
-# Created at 2020-02-05T19:42:56.168037Z
+# Created at 2020-02-06T07:28:28.549692Z
 # by aaron@cloudgenix.com
 sites v4.4:
   Oracle DC:
     address:
-      city: Phoenix2
+      city: Phoenix
       country: United States
       post_code: '85003'
       state: AZ
       street:
       street2:
     admin_state: disabled
-    description: Oracle DC Oracle DC Oracle DC
+    description: Oracle DC Oracle DC Oracle DC02052020
     element_cluster_role: HUB
     elements v2.3:
       OCI-7K-1:
