@@ -1,4 +1,0 @@
-configurations/Oracle DC.yml
-configurations/Oracle DC1.yml
-configurations/Oracle DC2.yml
-configurations/Oracle DC3.yml
