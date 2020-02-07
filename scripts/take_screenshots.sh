@@ -34,22 +34,18 @@ MODIFIED_CONFIGS=$(cat .tmp_modified_configs.txt)
 echo -e "${WHITE}Configuration Files Added or Modified:${NC}"
 echo "${MODIFIED_CONFIGS}" 2>&1 | indent
 
-# create screenshots of all new items in parallel - as we are network bound, use 2x threads of core count.
-# very long line, but no other way to do this cleanly.
-parallel --will-cite -j 200% "echo -e \"${WHITE}Taking Screenshots of objects in {}.. ${NC}\"; if python3 ./scripts/screenshot.py {}; then echo -e \"${GREEN}Success. ${NC}\"; else echo -e \"${RED}Failed, code $?. ${NC}\"; EXIT_CODE=1; fi" < .tmp_modified_configs.txt
-
-# non-parallel method.
-#for SITE_CONFIG in ${MODIFIED_CONFIGS}
-#  do
-#    echo -e "${WHITE}Taking Screenshots of objects in ${SITE_CONFIG}.. ${NC}"
-#    if python3 ./scripts/screenshot.py "${SITE_CONFIG}"
-#      then
-#        echo -e "${GREEN}Success. ${NC}"
-#      else
-#        echo -e "${RED}Failed, code $?. ${NC}"
-#        EXIT_CODE=1
-#    fi
-#  done
+# create screenshots of all new items
+for SITE_CONFIG in ${MODIFIED_CONFIGS}
+  do
+    echo -e "${WHITE}Taking Screenshots of objects in ${SITE_CONFIG}.. ${NC}"
+    if python3 ./scripts/screenshot.py "${SITE_CONFIG}"
+      then
+        echo -e "${GREEN}Success. ${NC}"
+      else
+        echo -e "${RED}Failed, code $?. ${NC}"
+        EXIT_CODE=1
+    fi
+  done
 
 # create index of site screenshots.
 echo -e "${WHITE}Creating Screenshot index README.md${NC}"

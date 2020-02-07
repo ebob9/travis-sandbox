@@ -7,14 +7,9 @@ branches:
 
 addons:
   chrome: stable  # For screenshots of completed builds.
-  apt:
-    update: true
 
 python:
   - "3.7"
-
-before_install:
-  - sudo apt-get -y install parallel
 
 install:
   - git fetch --tags
