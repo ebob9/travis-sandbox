@@ -152,7 +152,7 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
                     click_dom = driver.find_elements_by_xpath(click_xpath)[index]
                     click_dom.click()
                     click_succeeded += 1
-                except IndexError as e:
+                except IndexError:
                     # got a miss on the DOM select/click. Let's continue without the click.
                     pass
 
@@ -163,12 +163,12 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
                 click_dom = driver.find_elements_by_xpath(click_xpath)[0]
                 click_dom.click()
                 click_succeeded += 1
-            except IndexError as e:
+            except IndexError:
                 # got a miss on the DOM select/click. Let's continue without the click.
                 pass
 
         # print status
-        ci_print("Click({0} of {1} succeeded): ", end="")
+        ci_print("Click({0} of {1} succeeded): ".format(click_succeeded, len(click_index)), end="")
 
     # Tweak delay
     time.sleep(load_tweak_delay)
