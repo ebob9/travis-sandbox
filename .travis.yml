@@ -7,20 +7,25 @@ branches:
 
 addons:
   chrome: stable  # For screenshots of completed builds.
+  apt:
+    update: true
 
 python:
   - "3.7"
+
+before_install:
+  - sudo apt-get -y install parallel
+
+install:
+  - git fetch --tags
+  - pip install selenium-wire
+  - pip install cloudgenix_config
 
 before_script:
   - CHROME_MAIN_VERSION=`google-chrome-stable --version | sed -E 's/(^Google Chrome |\.[0-9]+ )//g'`
   - CHROMEDRIVER_VERSION=`curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_MAIN_VERSION"`
   - curl "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip" -O
   - unzip chromedriver_linux64.zip -d ~/bin
-
-install:
-  - git fetch --tags
-  - pip install selenium-wire
-  - pip install cloudgenix_config
 
 script:
   - bash ./scripts/deploy_changes.sh

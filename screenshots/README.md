@@ -1,5 +1,5 @@
-## Updated CloudGenix Topology (Fri Feb  7 00:12:28 UTC 2020)
-from commit:f137faf0e4b41e975216f5c83dbea4357c64f2d9 
+## Updated CloudGenix Topology (Fri Feb  7 00:40:49 UTC 2020)
+from commit:fd2e56b9a684c9dce0bf4ef0b7c9d5549bd1568f 
 <img alt="Map Image" src="map.png?raw=1" width="1110">
 
 ### All Sites (updated in this commit and previous commits):
