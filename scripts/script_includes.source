@@ -29,7 +29,7 @@ if [ "${CI}" == "travis" ]
     # CI var already set.
   else
     # Jenkins, or other. (Future work for this shell script)
-    echo -e "${RED}ERROR: Unknown or Unsupported CI system for this script. Expected one of ${SUPPORTED_CI}"
+    echo -e "${RED}ERROR: Unknown or Unsupported CI system for this script: '${CI}'. Expected one of ${SUPPORTED_CI}${NC}."
     exit 1
 fi
 
