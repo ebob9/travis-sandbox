@@ -1,5 +1,6 @@
 sudo: required  # not actually required, just allocates 7.5 GB system instead of 4 GB
 language: python
+cache: pip
 
 branches:
   only:
