@@ -43,9 +43,13 @@ git remote add origin "https://travisci-worker-ebob9:${GITHUB_REPO_TOKEN}@github
 #git remote get-url --all origin
 #git show-ref -s in_prod
 
-# Get latest commit tagged in production
+# Get latest commit tagged in production.
 CGX_COMMIT_IN_PROD=$(git show-ref -s in_prod)
-echo -e "${WHITE}Latest 'in_prod' commit:${NC} ${CGX_COMMIT_IN_PROD}"
+echo -e "${WHITE}Current'in_prod' commit:${NC} ${CGX_COMMIT_IN_PROD}"
+
+# Get commit previously in production.
+CGX_COMMIT_PREV_PROD=$(git show-ref -s in_prod)
+echo -e "${WHITE}Current 'prev_prod' commit:${NC} ${CGX_COMMIT_PREV_PROD}"
 
 # Get modified from current master commit and latest in_prod commit.
 MODIFIED_CONFIGS=$(git diff "${CGX_COMMIT_IN_PROD}" "${TRAVIS_COMMIT}" --diff-filter=ACMR --name-status | cut -f2 \
@@ -72,15 +76,34 @@ for SITE_CONFIG in ${MODIFIED_CONFIGS}
     fi
   done
 
-# delete current in_prod tag
-echo -e "${WHITE}Updating 'in_prod' tag in Github..${NC}"
-git tag -d in_prod 2>&1 | indent
-git push origin :refs/tags/in_prod 2>&1 | indent
+# check status, don't update tags if one of the config pushes failed.
+if [ ${EXIT_CODE} == 0 ]
+  then
+    # delete current in_prod tag
+    echo -e "${WHITE}Updating 'in_prod' tag in Github..${NC}"
+    git tag -d in_prod 2>&1 | indent
+    git push origin :refs/tags/in_prod 2>&1 | indent
 
-# add new in_prod tag to current build
-git tag in_prod 2>&1 | indent
-git push origin refs/tags/in_prod 2>&1 | indent
+    # add new in_prod tag to current build
+    git tag in_prod 2>&1 | indent
+    git push origin refs/tags/in_prod 2>&1 | indent
 
+    # delete current prev_prod dag
+    echo -e "${WHITE}Updating 'prev_prod' tag in Github..${NC}"
+    git tag -d prev_prod 2>&1 | indent
+    git push origin :refs/tags/prev_prod 2>&1 | indent
+
+    # add new prev_prod tag to current build
+    git tag prev_prod "${CGX_COMMIT_IN_PROD}" 2>&1 | indent
+    git push origin refs/tags/prev_prod 2>&1 | indent
+
+  else
+    # deploy to prod failed. Do not update tag so it will be tried again.
+    echo -e "${RED}ERROR: One or more cloudgenix_config items failed. Preserving existing 'in_prod' and 'prev_prod' tags.${NC}"
+    echo -e "${RED}    'in_prod': ${CGX_COMMIT_IN_PROD}${NC}"
+    echo -e "${RED}  'prev_prod': ${CGX_COMMIT_PREV_PROD}${NC}"
+    echo -e "${RED}Please review build logs, origin/results logs. Build can be re-run, or will automatically with a new pull to fix the issue(s)."
+fi
 
 # switch to logs
 echo -e "${WHITE}Preping to save logs to origin/results.. ${NC}"
