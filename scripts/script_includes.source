@@ -21,15 +21,16 @@ export NC='\033[0m'
 export EXIT_CODE=0
 
 # Set vars from Travis
-if [ "${CI}" == "travis" ]
+if [ "${USER}" == "travis" ]
   then
+    export CI_SYSTEM="Travis CI"
     export CI_COMMIT=${TRAVIS_COMMIT}
     export CI_BUILD_ID=${TRAVIS_BUILD_NUMBER}
     export CI_BUILD_URL=${TRAVIS_BUILD_WEB_URL}
     # CI var already set.
   else
     # Jenkins, or other. (Future work for this shell script)
-    echo -e "${RED}ERROR: Unknown or Unsupported CI system for this script: '${CI}'. Expected one of ${SUPPORTED_CI}${NC}."
+    echo -e "${RED}ERROR: Unknown or Unsupported CI system for this script: '${USER}'. Expected one of ${SUPPORTED_CI}${NC}."
     exit 1
 fi
 

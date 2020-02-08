@@ -59,7 +59,7 @@ if "TRAVIS_BUILD_NUMBER" in os.environ and "TRAVIS_BUILD_WEB_URL" in os.environ:
     # looks like Travis
     TRAVIS = True
     JENKINS = False
-    CI = "travis"
+    CI_SYSTEM = "Travis CI"
     CI_COMMIT = os.environ.get("TRAVIS_COMMIT")
     CI_BUILD_ID = os.environ.get("TRAVIS_BUILD_NUMBER")
     CI_BUILD_URL = os.environ.get("TRAVIS_BUILD_WEB_URL")
@@ -67,7 +67,7 @@ elif "BUILD_ID" in os.environ and "BUILD_URL" in os.environ:
     # jenkins or compatible
     TRAVIS = False
     JENKINS = True
-    CI = "jenkins"
+    CI_SYSTEM = "Jenkins"
     CI_COMMIT = os.environ.get("GIT_COMMIT")
     CI_BUILD_ID = os.environ.get("BUILD_NUMBER")
     CI_BUILD_URL = os.environ.get("BUILD_URL")
@@ -75,7 +75,7 @@ else:
     # no CI build info.
     TRAVIS = False
     JENKINS = False
-    CI = None
+    CI_SYSTEM = None
     CI_COMMIT = None
     CI_BUILD_ID = None
     CI_BUILD_URL = None
@@ -171,7 +171,8 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
 
     if click_xpath is not None:
         click_succeeded = 0
-        # need to click on something quickly.
+        # need to click on something quickly. But wait 1 second..
+        time.sleep(1)
         if isinstance(click_index, list):
             # click multiple (interface)
             for index in click_index:
@@ -463,7 +464,7 @@ for site in markdown_index:
     site_readme_md = f"""\
 ## Site: {site['name']}{f'''
 commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
-{CI} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI else ""}
+{CI_SYSTEM} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI_SYSTEM else ""}
 [Back To Topology](../README.md)
 <img alt="Site Card" src="site-info.png?raw=1" width="1110">
 
@@ -476,7 +477,7 @@ commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
         element_readme_md = f"""\
 ## Element: {element['name']}{f'''
 commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
-{CI} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI else ""}
+{CI_SYSTEM} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI_SYSTEM else ""}
 [Back To Site](../README.md)
 
 ### Interfaces
@@ -527,7 +528,7 @@ commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
         interface_readme_md = f"""\
 ## Element: {element['name']} Interfaces{f'''
 commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
-{CI} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI else ""}
+{CI_SYSTEM} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI_SYSTEM else ""}
 [Back To Element](../README.md)
 
 """

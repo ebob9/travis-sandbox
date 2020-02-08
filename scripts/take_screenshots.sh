@@ -38,7 +38,7 @@ cd screenshots || { echo -e "${RED}Could not cd to screenshots. Exiting.${NC}"; 
 {
   echo "## Updated CloudGenix Topology ($(date))"
   echo "from commit: ${CI_COMMIT} "
-  echo "${CI} job id: [${CI_BUILD_ID}](${CI_BUILD_URL})"
+  echo "${CI_SYSTEM} job id: [${CI_BUILD_ID}](${CI_BUILD_URL})"
   echo '<img alt="Map Image" src="map.png?raw=1" width="1110">'
   echo ''
   echo "### All Sites (updated in this commit and previous commits):"
