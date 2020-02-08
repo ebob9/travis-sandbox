@@ -79,15 +79,6 @@ for SITE_CONFIG in ${MODIFIED_CONFIGS}
 # check status, don't update tags if one of the config pushes failed.
 if [ ${EXIT_CODE} == 0 ]
   then
-    # delete current in_prod tag
-    echo -e "${WHITE}Updating 'in_prod' tag in Github..${NC}"
-    git tag -d in_prod 2>&1 | indent
-    git push origin :refs/tags/in_prod 2>&1 | indent
-
-    # add new in_prod tag to current build
-    git tag in_prod 2>&1 | indent
-    git push origin refs/tags/in_prod 2>&1 | indent
-
     # delete current prev_prod dag
     echo -e "${WHITE}Updating 'prev_prod' tag in Github..${NC}"
     git tag -d prev_prod 2>&1 | indent
@@ -96,6 +87,15 @@ if [ ${EXIT_CODE} == 0 ]
     # add new prev_prod tag to current build
     git tag prev_prod "${CGX_COMMIT_IN_PROD}" 2>&1 | indent
     git push origin refs/tags/prev_prod 2>&1 | indent
+
+    # delete current in_prod tag
+    echo -e "${WHITE}Updating 'in_prod' tag in Github..${NC}"
+    git tag -d in_prod 2>&1 | indent
+    git push origin :refs/tags/in_prod 2>&1 | indent
+
+    # add new in_prod tag to current build
+    git tag in_prod 2>&1 | indent
+    git push origin refs/tags/in_prod 2>&1 | indent
 
   else
     # deploy to prod failed. Do not update tag so it will be tried again.
