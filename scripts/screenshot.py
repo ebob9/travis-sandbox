@@ -54,6 +54,33 @@ else:
     ci_print("ERROR: No AUTH_TOKEN available for screenshots. Exiting.", color="red")
     sys.exit(1)
 
+# For CI - get build info to link back to build logs.
+if "TRAVIS_BUILD_NUMBER" in os.environ and "TRAVIS_BUILD_WEB_URL" in os.environ:
+    # looks like Travis
+    TRAVIS = True
+    JENKINS = False
+    CI = "travis"
+    CI_COMMIT = os.environ.get("TRAVIS_COMMIT")
+    CI_BUILD_ID = os.environ.get("TRAVIS_BUILD_NUMBER")
+    CI_BUILD_URL = os.environ.get("TRAVIS_BUILD_WEB_URL")
+elif "BUILD_ID" in os.environ and "BUILD_URL" in os.environ:
+    # jenkins or compatible
+    TRAVIS = False
+    JENKINS = True
+    CI = "jenkins"
+    CI_COMMIT = os.environ.get("GIT_COMMIT")
+    CI_BUILD_ID = os.environ.get("BUILD_NUMBER")
+    CI_BUILD_URL = os.environ.get("BUILD_URL")
+else:
+    # no CI build info.
+    TRAVIS = False
+    JENKINS = False
+    CI = None
+    CI_COMMIT = None
+    CI_BUILD_ID = None
+    CI_BUILD_URL = None
+
+
 # Globals
 UI_TOPOLOGY_PAGE = 'https://portal.{0}.cloudgenix.com/#map'
 UI_SITE_PAGE = 'https://portal.{0}.cloudgenix.com/#map/site/{1}'
@@ -434,7 +461,9 @@ ci_print("    Creating changed item Markdown Indexes..", color="white")
 for site in markdown_index:
     site_readme_filename = f"screenshots/{site['fs_name']}/README.md"
     site_readme_md = f"""\
-## Site: {site['name']}
+## Site: {site['name']}{f'''
+commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
+{CI} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI else ""}
 [Back To Topology](../README.md)
 <img alt="Site Card" src="site-info.png?raw=1" width="1110">
 
@@ -445,7 +474,9 @@ for site in markdown_index:
     for element in site['elements']:
         element_readme_filename = f"screenshots/{site['fs_name']}/{element['fs_name']}/README.md"
         element_readme_md = f"""\
-## Element: {element['name']}
+## Element: {element['name']}{f'''
+commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
+{CI} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI else ""}
 [Back To Site](../README.md)
 
 ### Interfaces
@@ -494,7 +525,9 @@ for site in markdown_index:
         interface_readme_filename = f"screenshots/{site['fs_name']}/{element['fs_name']}/interfaces/README.md"
         # interface readme header
         interface_readme_md = f"""\
-## Element: {element['name']} Interfaces
+## Element: {element['name']} Interfaces{f'''
+commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
+{CI} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI else ""}
 [Back To Element](../README.md)
 
 """
