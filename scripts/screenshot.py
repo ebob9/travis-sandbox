@@ -17,6 +17,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 
+# Default selenium items
+DEFAULT_IMPLICIT_WAIT = 25  # seconds
+
 
 # Create output function because print doesn't seem to flush enough
 def ci_print(text, end="\n", color=None):
@@ -145,6 +148,8 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
     :return:
     """
 
+    # Time the screenshot.
+    start = time.perf_counter()
     try:
         # Get page
         sel_driver.get(page_uri)
@@ -174,6 +179,9 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
     click_succeeded = 0
     click_requested = 0
 
+    # For Find Element, it uses implicit wait. We want this to just try once. set to zero temporarily.
+    driver.implicitly_wait(0)
+
     if click_xpath is not None:
         click_requested += 1
         # single click (not nec interface)
@@ -198,11 +206,15 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
 
     if click_xpath or click_xpath2:
         # print status
-        ci_print("Click({0} of {1} succeeded): ".format(click_succeeded, click_requested), end="")
+        ci_print("Click({0} of {1} succeeded) ".format(click_succeeded, click_requested), end="")
+    # set implicit wait back.
+    driver.implicitly_wait(DEFAULT_IMPLICIT_WAIT)
     # Tweak delay
     time.sleep(load_tweak_delay)
     driver.get_screenshot_as_file(output_filename)
-
+    # print the time
+    stop = time.perf_counter()
+    ci_print(f"(Elapsed {stop - start:0.4f}s): ")
     return
 
 
@@ -248,17 +260,18 @@ for site, config_site_cnf in config_sites.items():
 
 # Create a new instance of the Chrome driver
 # Headless mode of Chrome, ChromeDriver, and Selenium
-options = webdriver.ChromeOptions()
-options.add_argument('headless')
-# long window, lots of room
-options.add_argument('window-size=1920x1080')
-driver = webdriver.Chrome(chrome_options=options)
+# options = webdriver.ChromeOptions()
+# options.add_argument('headless')
+# # long window, lots of room
+# options.add_argument('window-size=1920x1080')
+# driver = webdriver.Chrome(chrome_options=options)
 
 # Interactive launch of the above, for debugging.
-# driver = webdriver.Chrome()
+driver = webdriver.Chrome()
+driver.set_window_size(1920, 1080)
 
-# wait for 30 secs for all operations.
-driver.implicitly_wait(30)
+# wait for DEFAULT_IMPLICIT_WAIT secs for all operations.
+driver.implicitly_wait(DEFAULT_IMPLICIT_WAIT)
 # default dom wait timer
 delay = 20  # seconds
 # default post dom wait timer
@@ -465,7 +478,7 @@ for site in markdown_index:
     site_readme_md = f"""\
 ## Site: {site['name']}{f'''
 
-commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
+commit: {CI_COMMIT}''' if CI_COMMIT else ""}{f'''
 
 {CI_SYSTEM} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI_SYSTEM else ""}
 
@@ -481,7 +494,7 @@ commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
         element_readme_md = f"""\
 ## Element: {element['name']}{f'''
 
-commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
+commit: {CI_COMMIT}''' if CI_COMMIT else ""}{f'''
 
 {CI_SYSTEM} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI_SYSTEM else ""}
 
@@ -535,7 +548,7 @@ commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
         interface_readme_md = f"""\
 ## Element: {element['name']} Interfaces{f'''
 
-commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
+commit: {CI_COMMIT}''' if CI_COMMIT else ""}{f'''
 
 {CI_SYSTEM} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI_SYSTEM else ""}
 
