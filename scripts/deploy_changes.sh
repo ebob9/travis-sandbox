@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Execute all config changes in a repo from the last 'in_prod' tag.
-# Update 'in_prod' if successful.
+# Update 'in_prod' if successful, and old 'in_prod' goes to 'prev_prod'.
 #
 # Script assumes CWD is a git repo and has the branch/commit that should be compared to 'in_prod' checked out.
 # Script also assumes cloudgenix_config is installed and working (pip install cloudgenix_config)
@@ -9,25 +9,9 @@
 # Variables expected set by the CI/CD before this script:
 # AUTH_TOKEN = Valid tenant_super CloudGenix Auth Token
 # GITHUB_REPO_TOKEN = Valid personal token that has Repository access to commit.
-# TRAVIS_COMMIT = Current commit hash
 
-# Color constants
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-WHITE='\033[1;37m'
-NC='\033[0m'
-
-EXIT_CODE=0
-
-# Set IFS to LF to handle spaces.
-IFS=$'\n'
-
-# Indent and pretty-fi function
-indent() { sed 's/^/    /'; }
-
-# Debug script (if needed)
-#set -x
+# load the common vars
+. scripts/script_includes.source
 
 # Set up git for log commit back to master.
 echo -e "${WHITE}Setting GIT authentication/origin..${NC}"
@@ -52,11 +36,11 @@ CGX_COMMIT_PREV_PROD=$(git show-ref -s in_prod)
 echo -e "${WHITE}Current 'prev_prod' commit:${NC} ${CGX_COMMIT_PREV_PROD}"
 
 # Get modified from current master commit and latest in_prod commit.
-MODIFIED_CONFIGS=$(git diff "${CGX_COMMIT_IN_PROD}" "${TRAVIS_COMMIT}" --diff-filter=ACMR --name-status | cut -f2 \
+MODIFIED_CONFIGS=$(git diff "${CGX_COMMIT_IN_PROD}" "${CI_COMMIT}" --diff-filter=ACMR --name-status | cut -f2 \
                    | grep 'configurations\/.*\.yml')
 
 # execute the changes
-echo -e "${WHITE}Commit diff check range:${NC} ${CGX_COMMIT_IN_PROD}...${TRAVIS_COMMIT}"
+echo -e "${WHITE}Commit diff check range:${NC} ${CGX_COMMIT_IN_PROD}...${CI_COMMIT}"
 echo -e "${WHITE}Configuration Files Added or Modified:${NC}"
 echo "${MODIFIED_CONFIGS}" 2>&1 | indent
 
@@ -135,12 +119,11 @@ cp -a /tmp/logs/* logs/ 2>&1 | indent
 # save changed files for later scripts.
 echo "${MODIFIED_CONFIGS}" > .tmp_modified_configs.txt
 
-if [ ${EXIT_CODE} == 0 ]
+if [ "${EXIT_CODE}" == 0 ]
   then
     echo -e "${GREEN}Finished! (Success)${NC}"
   else
     echo -e "${RED}Finished! (Failed)${NC}"
 fi
-exit ${EXIT_CODE}
-
+exit "${EXIT_CODE}"
 
