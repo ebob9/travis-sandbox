@@ -260,15 +260,15 @@ for site, config_site_cnf in config_sites.items():
 
 # Create a new instance of the Chrome driver
 # Headless mode of Chrome, ChromeDriver, and Selenium
-# options = webdriver.ChromeOptions()
-# options.add_argument('headless')
-# # long window, lots of room
-# options.add_argument('window-size=1920x1080')
-# driver = webdriver.Chrome(chrome_options=options)
+options = webdriver.ChromeOptions()
+options.add_argument('headless')
+# long window, lots of room
+options.add_argument('window-size=1920x1080')
+driver = webdriver.Chrome(chrome_options=options)
 
 # Interactive launch of the above, for debugging.
-driver = webdriver.Chrome()
-driver.set_window_size(1920, 1080)
+# driver = webdriver.Chrome()
+# driver.set_window_size(1920, 1080)
 
 # wait for DEFAULT_IMPLICIT_WAIT secs for all operations.
 driver.implicitly_wait(DEFAULT_IMPLICIT_WAIT)
