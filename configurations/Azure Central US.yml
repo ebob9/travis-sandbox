@@ -13,7 +13,7 @@ sites v4.4:
       street:
       street2:
     admin_state: active
-    description: Azure Central US Azure Central US Azure Central US02052020
+    description: Azure Central US Azure Central US Azure Central 
     element_cluster_role: HUB
     elements v2.3:
       Azure US Central CGX:

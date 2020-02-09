@@ -37,7 +37,9 @@ echo -e "${WHITE}Creating Screenshot index README.md${NC}"
 cd screenshots || { echo -e "${RED}Could not cd to screenshots. Exiting.${NC}"; exit 1; }
 {
   echo "## Updated CloudGenix Topology ($(date))"
-  echo "from commit: ${CI_COMMIT} "
+  echo ""
+  echo "From commit: ${CI_COMMIT} "
+  echo ""
   echo "${CI_SYSTEM} job id: [${CI_BUILD_ID}](${CI_BUILD_URL})"
   echo '<img alt="Map Image" src="map.png?raw=1" width="1110">'
   echo ''

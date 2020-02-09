@@ -29,10 +29,10 @@ git remote add origin "https://travisci-worker-ebob9:${GITHUB_REPO_TOKEN}@github
 
 # Get latest commit tagged in production.
 CGX_COMMIT_IN_PROD=$(git show-ref -s in_prod)
-echo -e "${WHITE}Current'in_prod' commit:${NC} ${CGX_COMMIT_IN_PROD}"
+echo -e "${WHITE}Current 'in_prod' commit:${NC} ${CGX_COMMIT_IN_PROD}"
 
 # Get commit previously in production.
-CGX_COMMIT_PREV_PROD=$(git show-ref -s in_prod)
+CGX_COMMIT_PREV_PROD=$(git show-ref -s prev_prod)
 echo -e "${WHITE}Current 'prev_prod' commit:${NC} ${CGX_COMMIT_PREV_PROD}"
 
 # Get modified from current master commit and latest in_prod commit.

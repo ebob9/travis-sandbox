@@ -1,6 +1,8 @@
-## Updated CloudGenix Topology (Sun Feb  9 00:23:24 UTC 2020)
-from commit: 3e1a5ed60c569e27ac92ee3b7193403100216811 
-Travis CI job id: [75](https://travis-ci.com/ebob9/travis-sandbox/builds/148063845)
+## Updated CloudGenix Topology (Sun Feb  9 00:31:00 UTC 2020)
+
+From commit: 105d9dfb836276aecdcec468e329e2344d2d6017 
+
+Travis CI job id: [76](https://travis-ci.com/ebob9/travis-sandbox/builds/148064092)
 <img alt="Map Image" src="map.png?raw=1" width="1110">
 
 ### All Sites (updated in this commit and previous commits):
