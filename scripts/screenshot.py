@@ -98,8 +98,10 @@ UI_ELEMENT_SYSLOG = 'https://portal.{0}.cloudgenix.com/#element/config/{1}/syslo
 UI_ELEMENT_NTP = 'https://portal.{0}.cloudgenix.com/#element/config/{1}/ntp_client'
 UI_INTERFACES_DETAIL = 'https://portal.{0}.cloudgenix.com/#element/config/{1}/interfaces/{2}'
 
-XPATH_INTERFACE_EXPANDS = "/html/body/div[1]/section/div/div[2]/div/div/div[2]/div/div/div[3]/div/div/form/" \
-                          "div[2]/div/div/div[1]/a"
+XPATH_1_INTERFACE_EXPANDS = "/html/body/div[1]/section/div/div[2]/div/div/div[2]/div/div/div[3]/div/div/form/" \
+                            "div[2]/div/div/div[1]/a"
+XPATH_2_INTERFACE_EXPANDS = "/html/body/div[1]/section/div/div[2]/div/div/div[2]/div/div/div[3]/div/div/form/" \
+                            "div[3]/div/div/div[1]/a"
 XPATH_CLOSE_WHATS_NEW = "/html/body/div[1]/div[4]/div/div/img"
 
 FILENAME_VALID_CHARS = '-_.() abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
@@ -128,7 +130,7 @@ def is_int(val):
 
 
 def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitfor_value="30", click_xpath=None,
-                    click_index=None, load_wait=20, load_tweak_delay=2):
+                    click_xpath2=None, load_wait=15, load_tweak_delay=1):
     """
     Load and save a screnshot from the CGX UI
     :param page_uri: URI of page to get
@@ -137,7 +139,7 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
     :param waitfor: Can be int (raw time), or id or class
     :param waitfor_value: ID or Class Name to wait for, if waitfor set to class or ID
     :param click_xpath: Optional - Full XPATH of element to load and click.
-    :param click_index: Optional - List of ints (indexes) of dom to click.
+    :param click_index: Optional - Second XPATH to load and click.
     :param load_wait: Default time for waitfor object to load.
     :param load_tweak_delay:
     :return:
@@ -169,35 +171,34 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
                  "".format(page_uri, waitfor, waitfor_value, load_wait),
                  color="yellow")
 
+    click_succeeded = 0
+    click_requested = 0
+
     if click_xpath is not None:
-        click_succeeded = 0
-        # need to click on something quickly. But wait 1 second..
-        time.sleep(1)
-        if isinstance(click_index, list):
-            # click multiple (interface)
-            for index in click_index:
-                try:
-                    click_dom = driver.find_elements_by_xpath(click_xpath)[index]
-                    click_dom.click()
-                    click_succeeded += 1
-                except IndexError:
-                    # got a miss on the DOM select/click. Let's continue without the click.
-                    pass
+        click_requested += 1
+        # single click (not nec interface)
+        try:
+            click_dom = driver.find_elements_by_xpath(click_xpath)[0]
+            click_dom.click()
+            click_succeeded += 1
+        except IndexError:
+            # got a miss on the DOM select/click. Let's continue without the click.
+            pass
 
-        else:
-            click_index = []
-            # single click (not nec interface)
-            try:
-                click_dom = driver.find_elements_by_xpath(click_xpath)[0]
-                click_dom.click()
-                click_succeeded += 1
-            except IndexError:
-                # got a miss on the DOM select/click. Let's continue without the click.
-                pass
+    if click_xpath2 is not None:
+        click_requested += 1
+        # single click (not nec interface)
+        try:
+            click_dom = driver.find_elements_by_xpath(click_xpath2)[0]
+            click_dom.click()
+            click_succeeded += 1
+        except IndexError:
+            # got a miss on the DOM select/click. Let's continue without the click.
+            pass
 
+    if click_xpath or click_xpath2:
         # print status
-        ci_print("Click({0} of {1} succeeded): ".format(click_succeeded, len(click_index)), end="")
-
+        ci_print("Click({0} of {1} succeeded): ".format(click_succeeded, click_requested), end="")
     # Tweak delay
     time.sleep(load_tweak_delay)
     driver.get_screenshot_as_file(output_filename)
@@ -439,7 +440,7 @@ for site_name, elements_list in sites_dict.items():
                 uri = UI_INTERFACES_DETAIL.format(region, element_id, interface_id)
                 filename = interface_directory + "{0}.png".format(interface_fs_name)
                 screenshot_page(uri, driver, filename, waitfor="class", waitfor_value='collapsible-form__toggle',
-                                click_xpath=XPATH_INTERFACE_EXPANDS, click_index=[0, 1])
+                                click_xpath=XPATH_1_INTERFACE_EXPANDS, click_xpath2=XPATH_2_INTERFACE_EXPANDS)
                 ci_print("Done", color="green")
 
                 # save markdown info

@@ -1,7 +1,7 @@
 ---
 type: cloudgenix template
 version: 1.0
-# Created at 2020-02-08T23:32:06.863952Z
+# Created at 2020-02-09T02:05:15.097943Z
 # by aaron@cloudgenix.com
 sites v4.4:
   AWS-OregonWest2DC:
@@ -13,7 +13,8 @@ sites v4.4:
       street:
       street2:
     admin_state: active
-    description: New Description!
+    description: AWS DC Instance for 3104v & VYOS ROuter implementationAWS-OregonWest2DCAWS-OregonWest2DC
+      AWS-OregonWest2DC AWS-OregonWest2DC02052020
     element_cluster_role: HUB
     elements v2.3:
       AWS-ION3Kv-DC:

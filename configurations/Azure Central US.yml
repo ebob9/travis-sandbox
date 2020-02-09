@@ -1,7 +1,7 @@
 ---
 type: cloudgenix template
 version: 1.0
-# Created at 2020-02-08T23:32:08.164101Z
+# Created at 2020-02-09T02:05:16.483215Z
 # by aaron@cloudgenix.com
 sites v4.4:
   Azure Central US:
@@ -13,7 +13,7 @@ sites v4.4:
       street:
       street2:
     admin_state: active
-    description: Azure Central US Azure Central US Azure Central 
+    description: Azure Central US Azure Central US Azure Central US02052020
     element_cluster_role: HUB
     elements v2.3:
       Azure US Central CGX:
