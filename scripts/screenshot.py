@@ -214,7 +214,7 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
     driver.get_screenshot_as_file(output_filename)
     # print the time
     stop = time.perf_counter()
-    ci_print(f"(Elapsed {stop - start:0.4f}s): ")
+    ci_print(f"(Elapsed {stop - start:0.4f}s): ", end="")
     return
 
 
