@@ -463,8 +463,11 @@ for site in markdown_index:
     site_readme_filename = f"screenshots/{site['fs_name']}/README.md"
     site_readme_md = f"""\
 ## Site: {site['name']}{f'''
+
 commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
+
 {CI_SYSTEM} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI_SYSTEM else ""}
+
 [Back To Topology](../README.md)
 <img alt="Site Card" src="site-info.png?raw=1" width="1110">
 
@@ -476,8 +479,11 @@ commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
         element_readme_filename = f"screenshots/{site['fs_name']}/{element['fs_name']}/README.md"
         element_readme_md = f"""\
 ## Element: {element['name']}{f'''
+
 commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
+
 {CI_SYSTEM} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI_SYSTEM else ""}
+
 [Back To Site](../README.md)
 
 ### Interfaces
@@ -527,8 +533,11 @@ commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
         # interface readme header
         interface_readme_md = f"""\
 ## Element: {element['name']} Interfaces{f'''
+
 commit:{CI_COMMIT}''' if CI_COMMIT else ""}{f'''
+
 {CI_SYSTEM} job id: [{CI_BUILD_ID}]({CI_BUILD_URL})''' if CI_SYSTEM else ""}
+
 [Back To Element](../README.md)
 
 """
