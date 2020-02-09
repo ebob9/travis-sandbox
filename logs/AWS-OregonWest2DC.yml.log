@@ -1,1 +1,30 @@
-configurations/AWS-OregonWest2DC.yml-5525
+WARNING: Lookup value 'Auto-A' was seen two or more times. If this object is used in a config template, it cannot be auto-referenced. To use, please remove duplicates in the controller, or reference it explicitly by the actual value: 
+[
+    {
+        "Auto-A": "15808511667990054"
+    },
+    {
+        "Auto-A": "15808511710370070"
+    }
+]
+WARNING: AS-PATH Access List auto-core-15616444547130179-as-path-out is auto_generated. Skipping.
+WARNING: Routing Prefix List auto-prefix-adv-and-distribute is auto_generated. Skipping.
+WARNING: Routing Prefix List auto-prefix-adv-no-distribute is auto_generated. Skipping.
+WARNING: Route Map auto-core-15616444547130179-route-map-in is auto_generated. Skipping.
+WARNING: Route Map auto-core-15616444547130179-route-map-out is auto_generated. Skipping.
+No Change for Site AWS-OregonWest2DC.
+ No Change for Waninterface Circuit to AWS Internet.
+ Element: Code is at correct version 5.1.9-b10.
+  No Change for Element AWS-ION3Kv-DC.
+   No Change for Interface 1.
+   No Change for Interface 2.
+   No Change for Interface controller 1.
+   No Change for Spoke HA in Element AWS-ION3Kv-DC.
+   No Change for BGP Global Config 15603555326910206.
+   No Change for BGP Peer VYOS NAT Router.
+   No Change for Staticroute 15616449624880098.
+   No Change for Ntp default.
+   No Change for Element_extension SSH Access.
+   No Change for Toolkit 15603554956420124.
+No Change for Site AWS-OregonWest2DC state (active).
+DONE
