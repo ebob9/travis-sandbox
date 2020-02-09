@@ -1,8 +1,8 @@
 ## Element: Azure US Central CGX Interfaces
 
-commit:105d9dfb836276aecdcec468e329e2344d2d6017
+commit: 938e87d608c8b2f42c8d9d54a2aa49ff454766de
 
-Travis CI job id: [76](https://travis-ci.com/ebob9/travis-sandbox/builds/148064092)
+Travis CI job id: [81](https://travis-ci.com/ebob9/travis-sandbox/builds/148069375)
 
 [Back To Element](../README.md)
 
