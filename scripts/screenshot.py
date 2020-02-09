@@ -126,7 +126,7 @@ def is_int(val):
     :return: Boolean, True if success
     """
     try:
-        num = int(val)
+        _ = int(val)
     except ValueError:
         return False
     return True
@@ -142,7 +142,7 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
     :param waitfor: Can be int (raw time), or id or class
     :param waitfor_value: ID or Class Name to wait for, if waitfor set to class or ID
     :param click_xpath: Optional - Full XPATH of element to load and click.
-    :param click_index: Optional - Second XPATH to load and click.
+    :param click_xpath2: Optional - Second XPATH to load and click.
     :param load_wait: Default time for waitfor object to load.
     :param load_tweak_delay:
     :return:
@@ -218,6 +218,9 @@ def screenshot_page(page_uri, sel_driver, output_filename, waitfor="time", waitf
     return
 
 
+# script start timer
+script_start = time.perf_counter()
+
 # quick check we have 1 argument.
 if len(sys.argv) != 2:
     ci_print("ERROR: This script takes exactly 1 command line argument. Got the following: ", color="red")
@@ -237,7 +240,7 @@ except IOError as e:
     sys.exit(1)
 
 # let user know it worked.
-print("    Loaded Config File {0}.".format(config_file))
+ci_print("    Loaded Config File {0}.".format(config_file))
 
 # create a site name-> ID dict and element name->ID dict.
 sdk = cloudgenix.API()
@@ -281,6 +284,9 @@ tweak_delay = 2  # seconds
 driver.header_overrides = {
     'X-Auth-Token': CLOUDGENIX_AUTH_TOKEN,
 }
+
+# start screenshot timer.
+screenshot_start = time.perf_counter()
 
 # Get map page to process and cache login
 ci_print("    Logging in and taking topology screenshot: ", end="")
@@ -470,6 +476,8 @@ for site_name, elements_list in sites_dict.items():
 
 # close the web page rendering engine
 driver.close()
+# save screenshot stop
+screenshot_stop = time.perf_counter()
 
 ci_print("    Creating changed item Markdown Indexes..", color="white")
 # prep to generate markdown indexes.
@@ -593,3 +601,8 @@ commit: {CI_COMMIT}''' if CI_COMMIT else ""}{f'''
     with open(site_readme_filename, 'w') as site_readme_fd:
         site_readme_fd.write(site_readme_md)
     ci_print("Done", color="green")
+
+# Script stop timer
+script_stop = time.perf_counter()
+ci_print(f"    File {config_file} completed. Screenshot time: {screenshot_stop - screenshot_start:0.4f}s, Total elapsed"
+         f" time: {script_stop - script_start:0.4f}s")
