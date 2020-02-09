@@ -51,7 +51,8 @@ for SITE_CONFIG in ${MODIFIED_CONFIGS}
   do
     SITE_CONFIG_FILE=$(basename "${SITE_CONFIG}")
     echo -e -n "${WHITE}Executing ${SITE_CONFIG_FILE} Configuration: ${NC}"
-    if echo "${SITE_CONFIG}-$RANDOM" > "/tmp/logs/${SITE_CONFIG_FILE}.log" 2>&1
+    echo -e -n "COMMAND: do_site ${SITE_CONFIG}"
+    if do_site "${SITE_CONFIG}" # comment out for debugging > "/tmp/logs/${SITE_CONFIG_FILE}.log" 2>&1
       then
         echo -e "${GREEN}Success. ${NC}"
       else
